@@ -21,4 +21,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccountEntity,I
     @Modifying
     @Query("delete UserAccountEntity u where u.username = :username")
     void deleteUserByUsername(@Param("username") String username);
+
+    @Query("Select u from UserAccountEntity u  where u.username = :username and u.password = :password")
+    Optional<UserAccountEntity> authUser(@Param("username") String username,@Param("password") String password);
 }

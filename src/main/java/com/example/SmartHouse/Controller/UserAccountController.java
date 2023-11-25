@@ -93,4 +93,19 @@ public class UserAccountController {
         Assert.notNull(userAccountEntity.getUsername(),"Username must be not null!");
         userAccountService.deleteUserByUsername(userAccountEntity.getUsername());
     }
+
+    @PostMapping("authUser")
+    public ResponseEntity<UserAccountEntity> authUser(@RequestBody UserAccountEntity userAccount){
+        System.out.println(userAccount);
+        Assert.notNull(userAccount.getUsername(),"Username must not be null");
+        Assert.notNull(userAccount.getPassword(),"Password must not be null");
+        Optional<UserAccountEntity> _user =userAccountService.authUser(userAccount);
+
+        if (_user.isPresent()){
+            return new ResponseEntity<>(_user.get(),HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

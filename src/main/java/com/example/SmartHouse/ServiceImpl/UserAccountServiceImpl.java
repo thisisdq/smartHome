@@ -15,19 +15,23 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Autowired
     private UserAccountRepository userAccountRepository;
 
+    @Override
     public List<UserAccountEntity> getAllUserAccountList(){
         return userAccountRepository.findAll();
     }
 
+    @Override
     public Optional<UserAccountEntity> findUserAccountEntityByUsername(String username){
         return userAccountRepository.findUserAccountEntityByUsername(username);
     }
 
+    @Override
     @Transactional
     public UserAccountEntity createUserAccount(UserAccountEntity userAccountEntity){
         return userAccountRepository.save(userAccountEntity);
     }
 
+    @Override
     @Transactional
     public Optional<UserAccountEntity> updateUserAccount(UserAccountEntity userAccountEntity){
         Optional<UserAccountEntity> _user = userAccountRepository
@@ -40,14 +44,22 @@ public class UserAccountServiceImpl implements UserAccountService {
         else return Optional.empty();
     }
 
+    @Override
     @Transactional
     public void deleteUserAccountByID(Integer id){
         userAccountRepository.deleteById(id);
     }
 
+    @Override
     @Transactional
     public void deleteUserByUsername(String username) {
         userAccountRepository.deleteUserByUsername(username);
+
+    }
+
+    @Override
+    public Optional<UserAccountEntity> authUser(UserAccountEntity userAccountEntity) {
+        return userAccountRepository.authUser(userAccountEntity.getUsername(),userAccountEntity.getPassword());
 
     }
 }

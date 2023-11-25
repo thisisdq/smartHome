@@ -15,4 +15,6 @@ public interface UserAccountService {
     void deleteUserAccountByID(Integer id);
 
     void deleteUserByUsername(String username);
+
+    Optional<UserAccountEntity> authUser(UserAccountEntity userAccountEntity);
 }

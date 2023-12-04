@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { UserService } from './user.service';
-import { UserAccount } from './entity';
-import { HttpClient } from '@angular/common/http';
+import { UserAccount } from './module';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthenticationService {
 
   constructor(private userService: UserService, private http : HttpClient,private router : Router) {
   }

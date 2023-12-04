@@ -1,22 +1,22 @@
 import { Component, Inject } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AuthService } from '../../auth.service';
-import { UserAccount } from '../../entity';
+import { AuthenticationService } from '../../authentication.service';
+import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
+import { UserAccount } from '../../module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.css'
+  styleUrl: './login-page.component.scss'
 })
 
 export class LoginPageComponent {
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private authservice: AuthService,
+    private authservice: AuthenticationService,
     private router:Router,
   ) { }
 

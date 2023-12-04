@@ -10,8 +10,9 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
 
   constructor(private http: HttpClient) { }
-  baseUrl = 'http://localhost:8888';
-  public authUser(userAccount : UserAccount) : Observable<UserAccount> {
-    return this.http.post(this.baseUrl +'/authUserAccount', userAccount);
+  baseUrl = 'http://localhost:8888/';
+  public authUser(userAccount : UserAccount) {
+    return this.http.post<UserAccount>(this.baseUrl +'authUser', userAccount);
   }
+  
 }

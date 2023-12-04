@@ -1,36 +1,38 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AuthService } from '../../auth.service';
+import { Component } from '@angular/core';
+import { AuthenticationService } from '../../authentication.service';
 import { Router } from '@angular/router';
-import { UserAccount, DEVICE_TYPE } from '../../entity';
+import { DEVICE_TYPE, UserAccount } from '../../module';
+import { CommonModule } from '@angular/common';
+
 @Component({
-  selector: 'app-smarthousepage',
+  selector: 'app-smart-house-controll-page',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './smarthousepage.component.html',
-  styleUrl: './smarthousepage.component.scss'
+  templateUrl: './smart-house-controll-page.component.html',
+  styleUrl: './smart-house-controll-page.component.scss'
 })
-export class SmarthousepageComponent implements OnInit, OnDestroy{
-
+export class SmartHouseControllPageComponent {
   constructor(
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private router: Router,
   ) {
-    
+
   }
 
-  timeInterval: any;
-  time: any;
+  public time = Date.now();
+  public timeInterval :any;
 
-  ngOnInit (){
-    // this.timeInterval = setInterval( ()=> {console.log('timeInterval');
-    // },1000);
+  ngOnInit() {
+    this.time = Date.now();
+    this.timeInterval = setInterval(() =>{
+      this.time = Date.now();
+    },1000)
   }
 
-  ngOnDestroy () {
-    // if(this.timeInterval){
-      // clearInterval(this.timeInterval);
-    // }
+  ngOnDestroy() {
+    if(this.timeInterval){
+      clearInterval(this.timeInterval);
+    }
   }
 
   public acc: UserAccount = {

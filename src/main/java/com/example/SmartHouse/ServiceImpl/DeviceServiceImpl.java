@@ -13,7 +13,6 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Autowired
     private DeviceEntityRepository deviceEntityRepository;
-
     @Override
     public List<DeviceEntity> findAll() {
         return deviceEntityRepository.findAll();

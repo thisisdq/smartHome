@@ -3,13 +3,7 @@
 </div>
 <button (click)="test()"> TEST</button> -->
 
-<button (click)="test()">TEST</button>
-{{time | date:'fullDate'}}
-<div>
-    <p>Today is {{time | date}}</p>
-    <p>Or if you prefer, {{time | date:'fullDate'}}</p>
-    <p>The time is {{time | date:'h:mm:ss'}}</p>
-</div>
+<!-- <button (click)="test()">TEST</button> --> 
 <div class="user-page">
     <div class="user-page-nav">
         <div class="nav-logo-smartHouse">
@@ -25,23 +19,22 @@
         <div class="content left">
             <div class="time-block">
                 <div class="time-top">
-                    <span class="time-span">3:20</span>
+                    <span class="time-span">{{time | date:'hh:mm'}}</span>
                 </div>
                 <div class="time-bottom">
                     <div>
                         <div class="days">
-                            <span>Wednesday</span>
+                            <span>{{time | date: 'EEEE'}}</span>
                         </div>
                         <div class="month">
-                            <span>01/12/2023</span>
+                            <span>{{time | date:'dd/MM/yyyy'}}</span>
                         </div>
                     </div>
                     <div class="icon">
                         <i class="fa-solid fa-sun"></i>
                     </div>
                     <div>
-                        <span class="hide" id="am">AM</span>
-                        <span class="hide" id="pm">PM</span>
+                        <span class="hide" id="am">{{time | date :'a'}}</span>
                     </div>
 
                 </div>

@@ -22,4 +22,7 @@ public class UserAccountEntity {
     @NonNull
     @Column(name = "PASSWORD")
     private String password;
+
+    @Column(name = "FULLNAME")
+    private String fullname;
 }

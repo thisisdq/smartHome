@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin("*")
+@CrossOrigin
 @RestController
 public class UserAccountController {
 
@@ -94,7 +94,7 @@ public class UserAccountController {
         userAccountService.deleteUserByUsername(userAccountEntity.getUsername());
     }
 
-    @PostMapping("authUser")
+    @PostMapping("/authUser")
     public ResponseEntity<UserAccountEntity> authUser(@RequestBody UserAccountEntity userAccount){
         System.out.println(userAccount);
         Assert.notNull(userAccount.getUsername(),"Username must not be null");
@@ -105,7 +105,8 @@ public class UserAccountController {
             return new ResponseEntity<>(_user.get(),HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            System.out.println("FAILED LOGIN");
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 }

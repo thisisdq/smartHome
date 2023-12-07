@@ -1,189 +1,320 @@
 .user-page {
-    font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
+  color: #fff;
+  width: 100%;
+  min-height: 100vh;
 
-    width: 100%;
-    height: 100%;
-
-    background:
-        linear-gradient(to bottom, rgba(0, 0, 0, 1),
-            rgba(0, 0, 0, 0.93) 35%,
-            rgba(16, 37, 158, 1) 70%, #8c037a 100%)
-        /* ,radial-gradient(circle at 0% 60%,
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 0.93) 35%,
+      rgba(16, 37, 158, 1) 70%,
+      #f7f4f6 100%
+    )
+    /* ,radial-gradient(circle at 0% 60%,
         rgba(149, 176, 249, 1),
-        rgba(149, 176, 249, 0) 50%); */
-    ;
-    background-repeat: no-repeat;
+        rgba(149, 176, 249, 0) 50%); */;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
 
-    .user-page-nav {
+  .user-page-container {
+    display: flex;
+    width: 100%;
+    max-width: 1800px;
+  }
+
+  .user-page-nav {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    border: black 1px solid;
+    justify-content: space-between;
+
+    .nav-left {
+      margin-left: 30px;
+      .current-date {
         display: flex;
-        color: #fff;
-        // background-color: #CCC;
-        justify-content: space-between;
-        align-items: center;
-        height: 50px;
-        padding-top:30px;
+        flex-direction: column;
+        width: 30%;
 
-        .nav-logo-smartHouse {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-            
-
-            .logo-smartHouse-img {
-                // background: url('https://c8.alamy.com/comp/2F8AW7E/home-logo-icon-vector-illustration-design-templatehome-and-house-logo-design-vector-logo-architecture-and-building-design-property-stay-at-home-2F8AW7E.jpg');
-                width: 35px;
-                height: 35px;
-                background-color: #8c037a;
-            }
-
-            span {
-                font-size: 1.5rem;
-                margin-left: 0.5rem;
-            }
+        span.time {
+          font-size: 10rem;
+          width: max-content;
         }
 
-        .nav-user-infor {
+        .bottom-date {
+          display: flex;
+
+          .day-month {
             display: flex;
-            flex-direction: row-reverse;
-            align-items: center;
-
-            .userAvatar-img {
-                width: 35px;
-                height: 35px;
-                border-radius: 50%;
-            }
-
-            span.FullName {
-                font-size: 1.2rem;
-                margin: 0 0.5rem;
-            }
-        }
-
-
-
-    }
-
-    .user-page-container {
-        display: flex;
-        gap: 200px;
-        margin-top: 1rem;
-
-        .content {
-            height: 100vh;
-            display: flex;
-            margin: 0 20px;
             flex-direction: column;
-            color: #FFF;
-            /*  */
+            font-size: 2rem;
+          }
 
-        }
-
-        .content.left {
-            width: 30%;
-            gap: 2rem;
-
-            .time-block {
-                display: flex;
-                flex-direction: column;
-
-                .time-top {
-                    span {
-                        font-size: 7rem;
-                    }
-                }
-
-                .time-bottom {
-                    display: flex;
-
-                    .icon {
-                        display: inline-flex;
-                        justify-content: center;
-                        align-items: center;
-                        margin: 0 3px;
-                        width: 40px;
-                        height: 40px;
-                    }
-
-                    div {
-                        display: flex;
-                        flex-direction: column;
-                    }
-                }
+          .icon-AMPM {
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+            margin-left: 30px;
+            span.a {
+              margin: 0 10px;
+              font-size: 2.5rem;
             }
+          }
         }
-
-        .content.right {
-            width: 70%;
-            gap: 2rem;
-
-            .list-device {
-                width: 100%;
-                height: 600px;
-                display: flex;
-                flex-direction: column;
-
-                .list-device-title {
-                    display: flex;
-                    align-items: center;
-                    .title-icon {
-                        display: flex;
-                        width: 45px;
-                        height: 45px;
-                        background-color: #fff;
-                        align-items: center;
-                        justify-content: center;
-                        margin-left: 5px;
-                        border-radius: 5px;
-
-                        i{
-                            font-size: 2rem;
-                            color: #fff333;
-                        }
-                    }
-                    
-                    .device-title{
-                        margin: 0 10px;
-                        font-size: 2.5rem;
-                    }
-                }
-            }
-
-            .cameras {
-
-                display: flex;
-                flex-direction: column;
-
-                .camera-videos {
-                    display: flex;
-
-                    .camera {
-                        margin: 0 1rem;
-
-                        .camera-img {
-                            width: 220px;
-                            height: 160px;
-                        }
-                    }
-                }
-
-            }
-        }
+      }
     }
-}
+
+    .nav-right {
+      display: flex;
+      flex-direction: column;
+      margin-right: 30px;
+      width: 100%;
+
+      .user-info {
+        display: flex;
+        margin-right: 30px;
+        flex-direction: row-reverse;
+        align-items: center;
+
+        span.username {
+          font-size: 5rem;
+        }
+
+        .avata-user {
+          width: 50px;
+          height: 50px;
+          margin: 0 30px;
+          border-radius: 50%;
+          background: #f7f4f6;
+        }
+      }
+
+      .event-temperature-humidity {
+        display: flex;
+        justify-content: flex-end;
+        height: 100%;
+
+        .round-box {
+          margin: 20px;
+          width: 350px;
+          height: 130px;
+          border-radius: 30px;
+        }
+
+        .infor-event {
+          display: flex;
+          flex-direction: column-reverse;
+          align-items: center;
+          justify-content: end;
+
+          background-color: #313133;
+          .event {
+            font-size: 1.5rem;
+            color: #C9D1D9;
+            margin-bottom: 5px;
+          }
+        }
+
+        .infor-temp-humi {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          background: linear-gradient(to top, #4E7D8E, #48538E);
+
+          .weather {
+            display: flex;
+            flex-direction: column;
 
 
-.fontAwesomeIcon::before{
-    display: inline-block;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
+
+            .temperature {
+              font-size: 4rem;
+              line-height: 4rem;
+              margin: 10px;
+              color: #FFF;
+            }
+
+            .humidity {
+              font-size: 1rem;
+              color: #C9D1D9;
+            }
+
+
+
+          }
+
+          span.icon {
+            font-size: 4rem;
+          }
+        }
+      }
+    }
+    //         color: #fff;
+    //         // background-color: #CCC;
+    //         justify-content: space-between;
+    //         align-items: center;
+    //         height: 50px;
+    //         padding-top:30px;
+
+    //         .nav-logo-smartHouse {
+    //             display: flex;
+    //             align-items: center;
+    //             margin-left: 20px;
+
+    //             .logo-smartHouse-img {
+    //                 // background: url('https://c8.alamy.com/comp/2F8AW7E/home-logo-icon-vector-illustration-design-templatehome-and-house-logo-design-vector-logo-architecture-and-building-design-property-stay-at-home-2F8AW7E.jpg');
+    //                 width: 35px;
+    //                 height: 35px;
+    //                 background-color: #8c037a;
+    //             }
+
+    //             span {
+    //                 font-size: 1.5rem;
+    //                 margin-left: 0.5rem;
+    //             }
+    //         }
+
+    //         .nav-user-infor {
+    //             display: flex;
+    //             flex-direction: row-reverse;
+    //             align-items: center;
+
+    //             .userAvatar-img {
+    //                 width: 35px;
+    //                 height: 35px;
+    //                 border-radius: 50%;
+    //             }
+
+    //             span.FullName {
+    //                 font-size: 1.2rem;
+    //                 margin: 0 0.5rem;
+    //             }
+    //         }
+
+    //     }
+
+    //     .user-page-container {
+    //         display: flex;
+    //         gap: 200px;
+    //         margin-top: 1rem;
+
+    //         .content {
+    //             height: 100vh;
+    //             display: flex;
+    //             margin: 0 20px;
+    //             flex-direction: column;
+    //             color: #FFF;
+    //             /*  */
+
+    //         }
+
+    //         .content.left {
+    //             width: 30%;
+    //             gap: 2rem;
+
+    //             .time-block {
+    //                 display: flex;
+    //                 flex-direction: column;
+
+    //                 .time-top {
+    //                     span {
+    //                         font-size: 7rem;
+    //                     }
+    //                 }
+
+    //                 .time-bottom {
+    //                     display: flex;
+
+    //                     .icon {
+    //                         display: inline-flex;
+    //                         justify-content: center;
+    //                         align-items: center;
+    //                         margin: 0 3px;
+    //                         width: 40px;
+    //                         height: 40px;
+    //                     }
+
+    //                     div {
+    //                         display: flex;
+    //                         flex-direction: column;
+    //                     }
+    //                 }
+    //             }
+    //         }
+
+    //         .content.right {
+    //             width: 70%;
+    //             gap: 2rem;
+
+    //             .list-device {
+    //                 width: 100%;
+    //                 height: 600px;
+    //                 display: flex;
+    //                 flex-direction: column;
+
+    //                 .list-device-title {
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .title-icon {
+    //                         display: flex;
+    //                         width: 45px;
+    //                         height: 45px;
+    //                         background-color: #fff;
+    //                         align-items: center;
+    //                         justify-content: center;
+    //                         margin-left: 5px;
+    //                         border-radius: 5px;
+
+    //                         i{
+    //                             font-size: 2rem;
+    //                             color: #fff333;
+    //                         }
+    //                     }
+
+    //                     .device-title{
+    //                         margin: 0 10px;
+    //                         font-size: 2.5rem;
+    //                     }
+    //                 }
+    //             }
+
+    //             .cameras {
+
+    //                 display: flex;
+    //                 flex-direction: column;
+
+    //                 .camera-videos {
+    //                     display: flex;
+
+    //                     .camera {
+    //                         margin: 0 1rem;
+
+    //                         .camera-img {
+    //                             width: 220px;
+    //                             height: 160px;
+    //                         }
+    //                     }
+    //                 }
+
+    //             }
+    //         }
+  }
 }
 
-.led-icon::before{
-    font: var(--fa-font-solid);
-    content: '\f0eb';
-    font-size: 5em;
-}
+// .fontAwesomeIcon::before{
+//     display: inline-block;
+//     text-rendering: auto;
+//     -webkit-font-smoothing: antialiased;
+// }
 
-.led-icon.active::before{
-    color: #fff333
-}
+// .led-icon::before{
+//     font: var(--fa-font-solid);
+//     content: '\f0eb';
+//     font-size: 5em;
+// }
+
+// .led-icon.active::before{
+//     color: #fff333
+// }

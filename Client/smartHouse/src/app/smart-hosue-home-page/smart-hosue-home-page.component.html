@@ -1,0 +1,42 @@
+<div class="home-page-container" id="home-page-container">
+  <div class="wrap">
+    <div class="nav">
+      <div class="current-date">
+        <span class="time">{{ time | date : "hh:mm" }}</span>
+        <div class="bottom-date">
+          <div class="day-month">
+            <span class="day">{{ time | date : "EEEE dd" }}</span>
+            <span class="month">{{ time | date : "MMMM" }}</span>
+          </div>
+
+          <div class="icon-AMPM">
+            <span class="fontAwesomeIcon icon">
+              <i class="fa-solid fa-sun"></i>
+            </span>
+            <span class="a">{{ time | date : "a" }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="infor">
+        <div class="user-infor">
+            <span class="username">DQ</span>
+        </div>
+        <div class="user-avatar">
+            <img src="" alt="image">
+        </div>
+        <div class="event-weather">
+          <div class="infor-event">No more events today</div>
+          <div class="infor-weather">
+            <span class="temperature"> 69 </span>
+            <span> 45% Humidity </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="column column-left">left</div>
+      <div class="column column-right">right</div>
+    </div>
+  </div>
+</div>

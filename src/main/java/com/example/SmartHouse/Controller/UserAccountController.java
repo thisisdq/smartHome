@@ -1,18 +1,20 @@
 package com.example.SmartHouse.Controller;
 
+import com.example.SmartHouse.DTO.ChangePasswordDTO;
 import com.example.SmartHouse.Entity.UserAccountEntity;
 import com.example.SmartHouse.Service.UserAccountService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
 public class UserAccountController {
 
@@ -21,6 +23,9 @@ public class UserAccountController {
 
     @PostMapping("/getAllUserAccount")
     public ResponseEntity<List<UserAccountEntity>> getAllUserAccount(){
+
+//        List<UserAccountEntity> _userAccounts = userAccountService.getAllUserAccountList();
+
         try {
             List<UserAccountEntity> _userAccountEntities = userAccountService.getAllUserAccountList();
             if(_userAccountEntities.isEmpty()){
@@ -35,6 +40,11 @@ public class UserAccountController {
         }
 
     }
+
+//    @PostMapping("getUserAccountById")
+//    @ResponseBody public ResponseEntity getUserById(){
+//        return ResponseEntity(
+//    }
 
     @PostMapping("/createUserAccount")
     public ResponseEntity<UserAccountEntity> createNewUser(@NotNull @RequestBody UserAccountEntity userAccount){
@@ -55,34 +65,20 @@ public class UserAccountController {
         }
     }
 
-    @PostMapping("/updateUserAccount")
-    public ResponseEntity<UserAccountEntity> updateUserAccount(@NotNull @RequestBody UserAccountEntity userAccountEntity){
-        try {
-            Optional<UserAccountEntity> user = userAccountService.updateUserAccount(userAccountEntity);
-            return user.map(userAccount -> new ResponseEntity<>(userAccount, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    @PostMapping("/changePassword")
+    @ResponseBody public ResponseEntity<UserAccountEntity> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
+        UserAccountEntity user = new UserAccountEntity();
+        user.setUsername(changePasswordDTO.getUsername());
+        user.setPassword(changePasswordDTO.getOldPassword());
+        UserAccountEntity u = userAccountService.authUser(user).orElse(null);
+        if(u != null){
+            u.setPassword(changePasswordDTO.getNewPassword());
+            userAccountService.save(u);
         }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return ResponseEntity.ok().body(u);
     }
 
-//    @PostMapping("/editPassword")
-//    public ResponseEntity<UserAccountEntity> changePassword (@RequestBody UserAccountEntity userAccount){
-//        try {
-//            Optional<UserAccountEntity> user = userAccountRepository.findUserAccountEntityByUsername(userAccount.getUsername());
-//            if(user.isPresent()){
-//                user.get().setPassword(userAccount.getPassword());
-//                return new ResponseEntity<>(userAccountRepository.save(user.get()), HttpStatus.OK);
-//            }
-//            else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }catch (Error e) {
-//            System.out.println(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-    @PostMapping("/deleteUser")
+    @PostMapping("/deleteUserByID")
     public void deleteUserByID(@RequestBody @NotNull UserAccountEntity userAccountEntity){
         Assert.notNull(userAccountEntity.getUserAccountID(),"UserAccountID must be not null!");
         userAccountService.deleteUserAccountByID(userAccountEntity.getUserAccountID());
@@ -95,18 +91,18 @@ public class UserAccountController {
     }
 
     @PostMapping("/authUser")
-    public ResponseEntity<UserAccountEntity> authUser(@RequestBody UserAccountEntity userAccount){
+    @ResponseBody public ResponseEntity<UserAccountEntity> authUser(@RequestBody UserAccountEntity userAccount){
         System.out.println(userAccount);
         Assert.notNull(userAccount.getUsername(),"Username must not be null");
         Assert.notNull(userAccount.getPassword(),"Password must not be null");
-        Optional<UserAccountEntity> _user =userAccountService.authUser(userAccount);
+        UserAccountEntity user = userAccountService.authUser(userAccount).orElse(null);
 
-        if (_user.isPresent()){
-            return new ResponseEntity<>(_user.get(),HttpStatus.OK);
+        if (user != null){
+            return ResponseEntity.ok().body(user);
         }
         else {
-            System.out.println("FAILED LOGIN");
-            return new ResponseEntity<>(HttpStatus.OK);
+            System.out.println("FAILED LOGIN!");
+            return ResponseEntity.ok(null);
         }
     }
 }

@@ -25,7 +25,6 @@ export class AuthenticationService {
         console.log(user);
         this.session = user;
         localStorage.setItem('session', JSON.stringify(this.session));
-        
       }else{
         console.log('login failed');
       }

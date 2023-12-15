@@ -71,7 +71,7 @@
     </div>
 </div> -->
 
-<div class="user-page">
+<!-- <div class="user-page">
   <div class="user-page-container" id="user-page-container">
     <div class="user-page-nav">
       <div class="nav-left">
@@ -101,15 +101,92 @@
         </div>
         <div class="event-temperature-humidity">
           <div class="infor-event round-box">
-            <span class="event">event 1 was here</span>
+            <span class="event">Event 1 was here</span>
             <span class="event">No more event for today</span>
           </div>
           <div class="infor-temp-humi round-box">
             <div class="weather">
-              <span class="temperature"> 69 </span>
+              <span class="temperature"> 69&ordm;<span style="font-size: 1rem;">C</span> </span>
               <span class="humidity"> 45% Humidity </span>
             </div>
             <span class="icon"><i class="fa-solid fa-cloud-sun-rain"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="controller-container">
+      <div class="controller controller-left">
+        <app-calendar></app-calendar>
+      </div>
+      <div class="controller controller-right">
+        <div class="rooms">
+          <div class="rooms-title">
+            <div class="title-icon"><i class="fa-solid fa-house-chimney"></i></div>
+            <span class="title">Rooms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="user-page">
+  <div class="wrapper">
+    <div class="user-page-container">
+      <div class="container-left column border">
+        <!--  nav -->
+        <div class="nav-left border">
+          <div class="current-date">
+            <span class="time">{{ time | date : "hh:mm" }}</span>
+            <div class="bottom-date">
+              <div class="day-month">
+                <span class="day">{{ time | date : "EEEE dd" }}</span>
+                <span class="month">{{ time | date : "MMMM" }}</span>
+              </div>
+  
+              <div class="icon-AMPM">
+                <span class="fontAwesomeIcon icon">
+                  <i class="fa-solid fa-sun"></i>
+                </span>
+                <span class="a">{{ time | date : "a" }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- calendar -->
+        <app-calendar></app-calendar>
+
+         <!-- weather -->
+
+         <!-- music -->
+      </div>
+      <div class="container-right column border">
+        <div class="nav-right border">
+          <div class="user-info">
+            <span class="username">{{ acc.fullname }}</span>
+            <div class="avata-user">
+              <img src="" alt="" />
+            </div>
+          </div>
+          <div class="event-temperature-humidity">
+            <div class="infor-event round-box">
+              <span class="event">Event 1 was here</span>
+              <span class="event">No more event for today</span>
+            </div>
+            <div class="infor-temp-humi round-box">
+              <div class="weather">
+                <span class="temperature"> 69&ordm;<span style="font-size: 1rem;">C</span> </span>
+                <span class="humidity"> 45% Humidity </span>
+              </div>
+              <span class="icon"><i class="fa-solid fa-cloud-sun-rain"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="rooms">
+          <div class="rooms-title">
+            <div class="title-icon"><i class="fa-solid fa-house-chimney"></i></div>
+            <span class="title">Rooms</span>
           </div>
         </div>
       </div>

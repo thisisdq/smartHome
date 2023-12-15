@@ -4,6 +4,8 @@ import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -25,4 +27,8 @@ public class UserAccountEntity {
 
     @Column(name = "FULLNAME")
     private String fullname;
+
+    @Transient
+    private List<HouseEntity> houses;
+
 }

@@ -9,28 +9,6 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent  implements OnInit, OnDestroy {
+export class AppComponent {
   title = 'smartHouse';
-
-  constructor(){
-    
-  }
-
-  public time = Date.now();
-  public timeInterval :any;
-
-  ngOnInit(): void {
-    this.time = Date.now();
-    this.timeInterval = setInterval(() =>{
-      this.time = Date.now();
-    },1000)
-  }
-
-  ngOnDestroy(): void {
-      if(this.timeInterval){
-        clearInterval(this.timeInterval);
-      }
-  }
-
-
 }

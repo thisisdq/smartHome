@@ -3,11 +3,12 @@ import { AuthenticationService } from "../../authentication.service";
 import { Router } from "@angular/router";
 import { DEVICE_TYPE, UserAccount } from "../../module";
 import { CommonModule } from "@angular/common";
+import { CalendarComponent } from "../calendar/calendar.component";
 
 @Component({
   selector: "app-smart-house-controll-page",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,CalendarComponent],
   templateUrl: "./smart-house-controll-page.component.html",
   styleUrl: "./smart-house-controll-page.component.scss",
 })

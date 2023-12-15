@@ -16,4 +16,27 @@ public class DeviceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DEVICE_ID")
     private Integer id;
+
+    @Column(name = "DEVICE_NAME")
+    private String deviceName;
+
+    @Column(name = "DEVICE_STATUS")
+    private String deviceStatus;
+
+    @Column(name = "DEVICE_TYPE")
+    private String deviceType;
+
+    @Column(name = "DEVICE_VALUE")
+    private Integer deviceValue;
+
+    @Column(name = "is_Running")
+    private Integer isRunning;
+
+    @Column(name = "ROOM_ID")
+    private Integer roomID;
+
+    @Column(name = "DEVICE_PORT")
+    private String devicePort;
+
 }
+

@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthUserAccount {
-    private boolean isUser;
-    private String message;
+public class ChangePasswordDTO {
+    String username;
+    String oldPassword;
+    String newPassword;
 }

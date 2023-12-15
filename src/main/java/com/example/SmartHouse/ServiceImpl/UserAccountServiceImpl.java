@@ -1,7 +1,9 @@
 package com.example.SmartHouse.ServiceImpl;
 
+import com.example.SmartHouse.Entity.HouseEntity;
 import com.example.SmartHouse.Entity.UserAccountEntity;
-import com.example.SmartHouse.Repository.UserAccountRepository;
+import com.example.SmartHouse.Repository.JpaRepo.UserAccountRepository;
+import com.example.SmartHouse.Service.HouseService;
 import com.example.SmartHouse.Service.UserAccountService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,23 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Autowired
     private UserAccountRepository userAccountRepository;
 
+    @Autowired
+    private HouseService houseService;
+
+    @Override
+    @Transactional
+    public UserAccountEntity save(UserAccountEntity userAccount) {
+        return userAccountRepository.save(userAccount);
+    }
+
     @Override
     public List<UserAccountEntity> getAllUserAccountList(){
-        return userAccountRepository.findAll();
+        List<UserAccountEntity> user = userAccountRepository.findAll();
+        for (UserAccountEntity u : user){
+            List<HouseEntity> _house = houseService.findAllByUserId(u.getUserAccountID());
+            u.setHouses(_house);
+        }
+        return user;
     }
 
     @Override
@@ -33,15 +49,15 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     @Transactional
-    public Optional<UserAccountEntity> updateUserAccount(UserAccountEntity userAccountEntity){
-        Optional<UserAccountEntity> _user = userAccountRepository
-                .findUserAccountEntityByUsername(userAccountEntity.getUsername());
-        if ( _user.isPresent()){
-            _user.get().setPassword(userAccountEntity.getPassword());
-            userAccountRepository.updatePasswordWhenUsername(_user.get().getUsername(),_user.get().getPassword());
+    public UserAccountEntity updateUserAccount(UserAccountEntity userAccountEntity){
+        UserAccountEntity _user = userAccountRepository
+                .findUserAccountEntityByUsername(userAccountEntity.getUsername()).orElse(null);
+        if ( _user != null){
+            _user.setPassword(userAccountEntity.getPassword());
+            userAccountRepository.updatePasswordWhenUsername(_user.getUsername(),_user.getPassword());
             return _user;
         }
-        else return Optional.empty();
+        else return null;
     }
 
     @Override

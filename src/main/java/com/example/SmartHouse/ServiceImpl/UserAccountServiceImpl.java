@@ -1,6 +1,5 @@
 package com.example.SmartHouse.ServiceImpl;
 
-import com.example.SmartHouse.Entity.HouseEntity;
 import com.example.SmartHouse.Entity.UserAccountEntity;
 import com.example.SmartHouse.Repository.JpaRepo.UserAccountRepository;
 import com.example.SmartHouse.Service.HouseService;
@@ -27,25 +26,30 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public List<UserAccountEntity> getAllUserAccountList(){
+    public List<UserAccountEntity> getAllUserAccount(){
         List<UserAccountEntity> user = userAccountRepository.findAll();
         for (UserAccountEntity u : user){
-            List<HouseEntity> _house = houseService.findAllByUserId(u.getUserAccountID());
-            u.setHouses(_house);
+            updateHouseForUserAccount(u);
         }
         return user;
     }
 
     @Override
-    public Optional<UserAccountEntity> findUserAccountEntityByUsername(String username){
-        return userAccountRepository.findUserAccountEntityByUsername(username);
+    @Transactional
+    public UserAccountEntity registerUserAccount(UserAccountEntity userAccountEntity){
+        return userAccountRepository.save(userAccountEntity);
     }
 
     @Override
-    @Transactional
-    public UserAccountEntity createUserAccount(UserAccountEntity userAccountEntity){
-        return userAccountRepository.save(userAccountEntity);
+    public UserAccountEntity findUserAccountEntityByUsername(String username){
+        return userAccountRepository.findUserAccountEntityByUsername(username).orElse(null);
     }
+
+//    @Override
+//    public UserAccountEntity findUserAccountByUsernameAndPassword(String username, String password){
+//        UserAccountEntity _user = userAccountRepository.findUserAccountEntityByUsernameAndPassword(username,password).orElse(null);
+//        return updateHouseForUserAccount(_user);
+//    }
 
     @Override
     @Transactional
@@ -74,9 +78,19 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public Optional<UserAccountEntity> authUser(UserAccountEntity userAccountEntity) {
-        return userAccountRepository.authUser(userAccountEntity.getUsername(),userAccountEntity.getPassword());
+    public UserAccountEntity getUserAccount(String username, String password) {
+        UserAccountEntity _userAccountEntity = userAccountRepository.findUserAccountEntityByUsernameAndPassword(username,password).orElse(null);
+        if(_userAccountEntity != null ){
+            _userAccountEntity.setPassword(null);
+        }
+        return updateHouseForUserAccount(_userAccountEntity);
+    }
 
+    private UserAccountEntity updateHouseForUserAccount(UserAccountEntity userAccount){
+        if (userAccount != null ){
+            userAccount.setHouses(houseService.findAllByUserId(userAccount.getUserAccountID()));
+        }
+        return userAccount;
     }
 }
 

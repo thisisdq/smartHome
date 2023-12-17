@@ -1,5 +1,6 @@
 package com.example.SmartHouse.Controller;
 
+import com.example.SmartHouse.DTO.AccountDTO;
 import com.example.SmartHouse.DTO.ChangePasswordDTO;
 import com.example.SmartHouse.Entity.UserAccountEntity;
 import com.example.SmartHouse.Service.UserAccountService;
@@ -7,12 +8,10 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -21,19 +20,12 @@ public class UserAccountController {
     @Autowired
     private UserAccountService userAccountService;
 
-    @PostMapping("/getAllUserAccount")
+    @PostMapping("/userAccount/getAll")
+    @ResponseBody
     public ResponseEntity<List<UserAccountEntity>> getAllUserAccount(){
-
-//        List<UserAccountEntity> _userAccounts = userAccountService.getAllUserAccountList();
-
         try {
-            List<UserAccountEntity> _userAccountEntities = userAccountService.getAllUserAccountList();
-            if(_userAccountEntities.isEmpty()){
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            else {
-                return new ResponseEntity<>(_userAccountEntities,HttpStatus.OK);
-            }
+            List<UserAccountEntity> _userAccountEntities = userAccountService.getAllUserAccount();
+            return ResponseEntity.ok().body(_userAccountEntities);
         } catch (Error e){
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -41,68 +33,47 @@ public class UserAccountController {
 
     }
 
-//    @PostMapping("getUserAccountById")
-//    @ResponseBody public ResponseEntity getUserById(){
-//        return ResponseEntity(
-//    }
+    @PostMapping("/userAccount/account")
+    @ResponseBody
+    public ResponseEntity<UserAccountEntity> getUserAccount(@RequestBody @NotNull AccountDTO accountDTO){
+        UserAccountEntity user = userAccountService.getUserAccount(accountDTO.getUsername(),accountDTO.getPassword());
+        return ResponseEntity.ok().body(user);
+    }
 
-    @PostMapping("/createUserAccount")
-    public ResponseEntity<UserAccountEntity> createNewUser(@NotNull @RequestBody UserAccountEntity userAccount){
-        try {
-            if(userAccountService
-                    .findUserAccountEntityByUsername(userAccount.getUsername())
-                    .isPresent()){
-                return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-            }
-            else {
-                UserAccountEntity user = userAccountService.createUserAccount(userAccount);
-                return new ResponseEntity<>(user,HttpStatus.CREATED);
-            }
-        }catch (Error e){
-            System.out.println("error");
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    @PostMapping("/userAccount/register")
+    public ResponseEntity<UserAccountEntity> registerNewUser(@NotNull @RequestBody UserAccountEntity userAccount){
+        UserAccountEntity _user = userAccountService.findUserAccountEntityByUsername(userAccount.getUsername());
+        if(_user != null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        else {
+            UserAccountEntity user = userAccountService.registerUserAccount(userAccount);
+            return new ResponseEntity<>(user,HttpStatus.CREATED);
         }
     }
 
-    @PostMapping("/changePassword")
-    @ResponseBody public ResponseEntity<UserAccountEntity> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
-        UserAccountEntity user = new UserAccountEntity();
-        user.setUsername(changePasswordDTO.getUsername());
-        user.setPassword(changePasswordDTO.getOldPassword());
-        UserAccountEntity u = userAccountService.authUser(user).orElse(null);
-        if(u != null){
-            u.setPassword(changePasswordDTO.getNewPassword());
-            userAccountService.save(u);
+    @PostMapping("/userAccount/changePassword")
+    @ResponseBody
+    public ResponseEntity<UserAccountEntity> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
+        UserAccountEntity _user =
+                userAccountService
+                        .getUserAccount(changePasswordDTO.getUsername(),changePasswordDTO.getOldPassword());
+        if(_user != null){
+            _user.setPassword(changePasswordDTO.getNewPassword());
+            userAccountService.save(_user);
         }
-        return ResponseEntity.ok().body(u);
+        return ResponseEntity.ok().body(_user);
     }
 
-    @PostMapping("/deleteUserByID")
+    @PostMapping("/userAccount/deleteUserByID")
     public void deleteUserByID(@RequestBody @NotNull UserAccountEntity userAccountEntity){
         Assert.notNull(userAccountEntity.getUserAccountID(),"UserAccountID must be not null!");
         userAccountService.deleteUserAccountByID(userAccountEntity.getUserAccountID());
     }
 
-    @PostMapping("/deleteUserByUsername")
+    @PostMapping("/userAccount/deleteUserByUsername")
     public void deleteUserByUsername(@RequestBody @NotNull UserAccountEntity userAccountEntity){
         Assert.notNull(userAccountEntity.getUsername(),"Username must be not null!");
         userAccountService.deleteUserByUsername(userAccountEntity.getUsername());
-    }
-
-    @PostMapping("/authUser")
-    @ResponseBody public ResponseEntity<UserAccountEntity> authUser(@RequestBody UserAccountEntity userAccount){
-        System.out.println(userAccount);
-        Assert.notNull(userAccount.getUsername(),"Username must not be null");
-        Assert.notNull(userAccount.getPassword(),"Password must not be null");
-        UserAccountEntity user = userAccountService.authUser(userAccount).orElse(null);
-
-        if (user != null){
-            return ResponseEntity.ok().body(user);
-        }
-        else {
-            System.out.println("FAILED LOGIN!");
-            return ResponseEntity.ok(null);
-        }
     }
 }

@@ -10,22 +10,25 @@ import { UserService } from './user.service';
 })
 export class AuthenticationService {
 
-  constructor(private userService: UserService, private http : HttpClient,private router : Router) {
+  constructor(private userService: UserService, private http: HttpClient, private router: Router) {
   }
-  session :any;
+  session: any;
 
-  baseUrl :string = 'http://localhost:8888/';
-  
-  login(userAccount :UserAccount) {
+  baseUrl: string = 'http://localhost:8888';
+
+  login(userAccount: UserAccount) {
     let user: UserAccount;
     var subject = new Subject<UserAccount>();
-    this.http.post<UserAccount>(this.baseUrl +'authUser', userAccount).subscribe(res => {
+    this.http.post<UserAccount>(
+      this.baseUrl + '/getUserAccount',
+      { username: userAccount.username, password: userAccount.password }
+    ).subscribe(res => {
       user = res;
-      if (user){
+      if (user) {
         console.log(user);
         this.session = user;
         localStorage.setItem('session', JSON.stringify(this.session));
-      }else{
+      } else {
         console.log('login failed');
       }
       subject.next(user);
@@ -33,8 +36,8 @@ export class AuthenticationService {
     return subject.asObservable();
   }
 
-  logout (){
-    this.session = undefined ;
+  logout() {
+    this.session = undefined;
     localStorage.removeItem('session');
     this.router.navigateByUrl('/');
   }

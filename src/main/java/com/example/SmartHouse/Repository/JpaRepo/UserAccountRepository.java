@@ -16,6 +16,12 @@ public interface UserAccountRepository extends JpaRepository<UserAccountEntity,I
 
     Optional<UserAccountEntity> findUserAccountEntityByUsername(String username);
 
+
+    @Query("SELECT u FROM UserAccountEntity u Where u.userAccountID = :ID")
+    Optional<UserAccountEntity> findUserById(@Param("ID") Integer ID);
+
+
+
     @Modifying
     @Query("update UserAccountEntity u set u.password = :password where u.username = :username ")
     void updatePasswordWhenUsername(@Param("username") String username,@Param("password") String password);
@@ -25,5 +31,5 @@ public interface UserAccountRepository extends JpaRepository<UserAccountEntity,I
     void deleteUserByUsername(@Param("username") String username);
 
     @Query("Select u from UserAccountEntity u  where u.username = :username and u.password = :password")
-    Optional<UserAccountEntity> authUser(@Param("username") String username,@Param("password") String password);
+    Optional<UserAccountEntity> findUserAccountEntityByUsernameAndPassword(@Param("username") String username,@Param("password") String password);
 }

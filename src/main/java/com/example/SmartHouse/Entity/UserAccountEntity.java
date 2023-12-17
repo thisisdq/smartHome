@@ -1,8 +1,10 @@
 package com.example.SmartHouse.Entity;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -17,11 +19,10 @@ public class UserAccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userAccountID;
 
-    @Nonnull
+    @NotNull
     @Column(name = "USERNAME")
     private String username;
 
-    @NonNull
     @Column(name = "PASSWORD")
     private String password;
 

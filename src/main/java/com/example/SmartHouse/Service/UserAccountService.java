@@ -9,16 +9,12 @@ import java.util.Optional;
 
 public interface UserAccountService {
     UserAccountEntity save(UserAccountEntity userAccount);
-
-    List<UserAccountEntity> getAllUserAccountList();
-
-    Optional<UserAccountEntity> findUserAccountEntityByUsername(String username);
-
-    UserAccountEntity createUserAccount(UserAccountEntity userAccountEntity);
+    List<UserAccountEntity> getAllUserAccount();
+    UserAccountEntity getUserAccount(String username, String password);
+    UserAccountEntity findUserAccountEntityByUsername(String username);
+//    UserAccountEntity findUserAccountByUsernameAndPassword(String username, String password);
+    UserAccountEntity registerUserAccount(UserAccountEntity userAccountEntity);
     UserAccountEntity updateUserAccount(UserAccountEntity userAccountEntity);
     void deleteUserAccountByID(Integer id);
-
     void deleteUserByUsername(String username);
-
-    Optional<UserAccountEntity> authUser(UserAccountEntity userAccountEntity);
 }

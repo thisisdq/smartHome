@@ -3,34 +3,39 @@ export interface House {
     houseID? : number,
     address? : string,
     floors? : Floor[],
+    userID? : number
 }
 
 export interface UserAccount {
-    userID?: number,
+    userAccountID?: number,
     fullname?: string,
     username?: string,
     password?: string,
-    house?: House[],
+    houses?: House[],
 }
 export interface Floor {
     floorID? : number,
     floorName? : string,
     rooms? : Room[],
+    houseID? : number,
 }
 
 export interface Room {
     roomID? : number,
     roomName? : string,
     devices? : Device[],
+    floorID? : number,
 }
 
 export interface Device {
-    deviceID?: number,
+    id?: number,
     deviceType? : DEVICE_TYPE,
     deviceName?: string,
     deviceStatus?: string,
-    deviceValue?: string,
-    isRuning?: boolean
+    deviceValue?: number,
+    isRunning?: number,
+    roomID? :number,
+    devicePort? :string
 }
 export enum DEVICE_TYPE {
     LED = 'LED',

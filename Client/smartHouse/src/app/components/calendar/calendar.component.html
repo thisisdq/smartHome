@@ -59,11 +59,8 @@
             </ul>
         </div>
         <div class="event-of-day">
-            <ul class="events">
-                <li class="even">task 1</li>
-                <li class="even">task 2</li>
-                <li class="even">task 3</li>
-                <li class="even">task 4</li>
+            <ul class="events" *ngFor="let task of tasks">
+                <li class="even">{{task}}</li>
             </ul>
         </div>
     </div>

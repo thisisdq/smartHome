@@ -11,6 +11,7 @@ import { UserService } from './user.service';
 export class AuthenticationService {
 
   constructor(private userService: UserService, private http: HttpClient, private router: Router) {
+    this.session = localStorage.getItem('session');
   }
   session: any;
 
@@ -20,7 +21,7 @@ export class AuthenticationService {
     let user: UserAccount;
     var subject = new Subject<UserAccount>();
     this.http.post<UserAccount>(
-      this.baseUrl + '/getUserAccount',
+      this.baseUrl + '/userAccount/account',
       { username: userAccount.username, password: userAccount.password }
     ).subscribe(res => {
       user = res;
@@ -37,7 +38,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.session = undefined;
+    this.session = null;
     localStorage.removeItem('session');
     this.router.navigateByUrl('/');
   }

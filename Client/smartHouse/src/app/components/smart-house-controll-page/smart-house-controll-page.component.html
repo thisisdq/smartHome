@@ -1,142 +1,9 @@
-<!-- <div class="user-page">
-    <div class="user-page-nav">
-        <div class="nav-logo-smartHouse">
-            <div class="logo-smartHouse-img"></div>
-            <span>Smart House</span>
-        </div>
-        <div class="nav-user-infor">
-            <span class="FullName">Username</span>
-            <img src="" alt="" class="userAvatar-img">
-        </div>
-    </div>
-    <div class="user-page-container">
-        <div class="content left">
-            <div class="time-block">
-                <div class="time-top">
-                    <span class="time-span">{{time | date:'hh:mm'}}</span>
-                </div>
-                <div class="time-bottom">
-                    <div>
-                        <div class="days">
-                            <span>{{time | date: 'EEEE'}}</span>
-                        </div>
-                        <div class="month">
-                            <span>{{time | date:'dd/MM/yyyy'}}</span>
-                        </div>
-                    </div>
-                    <div class="icon">
-                        <i class="fa-solid fa-sun"></i>
-                    </div>
-                    <div>
-                        <span class="hide" id="am">{{time | date :'a'}}</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="Schedule">
-                Schedule
-            </div>
-        </div>
-        <div class="content right">
-            <div class="music">
-                <span>Don't Stop Me Now</span>
-            </div>
-            <div class="list-device">
-                <div class="list-device-title">
-                    <div class="title-icon">
-                        <i class="fa-solid fa-house-chimney"></i>
-                    </div>
-                    <span class="fontAwesomeIcon "></span>
-                    <span class="device-title">Favorites</span>
-                </div>
-            </div>
-            <div class="cameras">
-                <span>Cameras</span>
-                <div class="camera-videos">
-                    <div class="camera">
-                        CAM 1
-                        <img src="" class="camera-img">
-                    </div>
-                    <div class="camera">
-                        CAM 2
-                        <img src="" class="camera-img">
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div> -->
-
-<!-- <div class="user-page">
-  <div class="user-page-container" id="user-page-container">
-    <div class="user-page-nav">
-      <div class="nav-left">
-        <div class="current-date">
-          <span class="time">{{ time | date : "hh:mm" }}</span>
-          <div class="bottom-date">
-            <div class="day-month">
-              <span class="day">{{ time | date : "EEEE dd" }}</span>
-              <span class="month">{{ time | date : "MMMM" }}</span>
-            </div>
-
-            <div class="icon-AMPM">
-              <span class="fontAwesomeIcon icon">
-                <i class="fa-solid fa-sun"></i>
-              </span>
-              <span class="a">{{ time | date : "a" }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="nav-right">
-        <div class="user-info">
-          <span class="username">{{ acc.fullname }}</span>
-          <div class="avata-user">
-            <img src="" alt="" />
-          </div>
-        </div>
-        <div class="event-temperature-humidity">
-          <div class="infor-event round-box">
-            <span class="event">Event 1 was here</span>
-            <span class="event">No more event for today</span>
-          </div>
-          <div class="infor-temp-humi round-box">
-            <div class="weather">
-              <span class="temperature"> 69&ordm;<span style="font-size: 1rem;">C</span> </span>
-              <span class="humidity"> 45% Humidity </span>
-            </div>
-            <span class="icon"><i class="fa-solid fa-cloud-sun-rain"></i></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="controller-container">
-      <div class="controller controller-left">
-        <app-calendar></app-calendar>
-      </div>
-      <div class="controller controller-right">
-        <div class="rooms">
-          <div class="rooms-title">
-            <div class="title-icon"><i class="fa-solid fa-house-chimney"></i></div>
-            <span class="title">Rooms</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
 <div class="user-page">
   <div class="wrapper">
     <div class="user-page-container">
-      <div class="container-left column border">
+      <div class="container-left column">
         <!--  nav -->
-        <div class="nav-left border">
+        <div class="nav-left">
           <div class="current-date">
             <span class="time">{{ time | date : "hh:mm" }}</span>
             <div class="bottom-date">
@@ -144,7 +11,7 @@
                 <span class="day">{{ time | date : "EEEE dd" }}</span>
                 <span class="month">{{ time | date : "MMMM" }}</span>
               </div>
-  
+
               <div class="icon-AMPM">
                 <span class="fontAwesomeIcon icon">
                   <i class="fa-solid fa-sun"></i>
@@ -157,12 +24,12 @@
         <!-- calendar -->
         <app-calendar></app-calendar>
 
-         <!-- weather -->
+        <!-- weather -->
 
-         <!-- music -->
+        <!-- music -->
       </div>
-      <div class="container-right column border">
-        <div class="nav-right border">
+      <div class="container-right column">
+        <div class="nav-right">
           <div class="user-info">
             <span class="username">{{ acc.fullname || "Username" }}</span>
             <div class="avata-user">
@@ -171,8 +38,9 @@
           </div>
           <div class="event-temperature-humidity">
             <div class="infor-event round-box">
-              <span class="event">Event 1 was here</span>
-              <span class="event">No more event for today</span>
+              <div *ngFor="let event of events_Currentday">
+                <span class="event">{{event}}</span>
+              </div>
             </div>
             <div class="infor-temp-humi round-box">
               <div class="weather">
@@ -183,19 +51,45 @@
             </div>
           </div>
         </div>
-        <div class="rooms">
-          <div class="rooms-title">
-            <div class="title-icon"><i class="fa-solid fa-house-chimney"></i></div>
-            <span class="title">Rooms</span>
-          </div>
-          <div *ngFor="let house of acc.houses">
-            House
-            <div *ngFor="let floor of house.floors">
-              floor 
-              <div *ngFor="let rooms of floor.rooms">
-                room
+        <div class="controller-container" *ngFor="let house of acc.houses">
+          <div class="houses">
+            <div class="house">
+              <div class="house-top">
+                <span class="house-title"><span class="house-icon"></span>{{house.houseTitle}}</span>
+                <input type="checkbox" name="house-checkbox">
               </div>
 
+              <div class="floors" *ngFor="let floor of house.floors">
+                <div class="floor">
+                  <div class="floor-top">
+                    <span class="floor-title">{{floor.floorName}}</span>
+                    <input type="checkbox" class="house-checkbox">
+                  </div>
+
+                  <div class="rooms" *ngFor="let room of floor.rooms">
+                    <div class="room">
+                      <label>{{room.roomName}}</label>
+                      <input type="checkbox" class="house-checkbox">
+                      <div class="devices">
+                        <div *ngFor="let device of room.devices" (click)="deviceClick(device)">
+
+                          <div class="device" [ngClass]="device.isRunning !== 0 ? 'active' : 'inactive'">
+                            <div class="icon-value">
+                              <span class="icon-device" [ngClass]="device.deviceType"></span>
+                              <span class="value-device">{{device.deviceValue}}</span>
+                            </div>
+                            <div class="device-infor">
+                              <span class="device-name">{{device.deviceName}}</span>
+                              <span class="device-status">{{device.deviceStatus || (device.isRunning == 0 ? 'Đang tắt' : 'Đang bật')}}</span>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

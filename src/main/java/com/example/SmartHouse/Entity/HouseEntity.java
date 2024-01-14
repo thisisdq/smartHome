@@ -26,8 +26,15 @@ public class HouseEntity {
     @Column(name = "USER_ID")
     private Integer userID;
 
+    @Column(name = "HOUSE_TITLE")
+    private String houseTitle;
+
+    @Column(name = "HOUSE_TEMPERATURE")
+    private Float houseTemperature;
+
+    @Column(name = "HOUSE_HUMIDITY")
+    private Float houseHumidity;
+
     @Transient
     List<FloorEntity> floors;
-
-
 }

@@ -17,7 +17,7 @@ public class RoomServiceImpl implements RoomService {
     private RoomRepository roomRepository;
 
     @Autowired
-    private DeviceRepository deviceRepository;
+    private DeviceService deviceService;
 
     @Override
     public List<RoomEntity> findAll() {
@@ -28,7 +28,7 @@ public class RoomServiceImpl implements RoomService {
     public List<RoomEntity> findAllByFloorId(Integer id) {
         List<RoomEntity> _rooms = roomRepository.findAllByFloorID(id);
         for(RoomEntity r : _rooms){
-            r.setDevices(deviceRepository.findAllByRoomId(r.getRoomID()));
+            r.setDevices(deviceService.findAllByRoomId(r.getRoomID()));
         }
         return _rooms;
     }

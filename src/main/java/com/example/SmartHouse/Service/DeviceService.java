@@ -10,4 +10,8 @@ public interface DeviceService {
     List<DeviceEntity> findAll();
 
     List<DeviceEntity> findAllByRoomId(Integer id);
+
+    DeviceEntity findById(Integer id);
+
+    DeviceEntity updateDevice(DeviceEntity device);
 }

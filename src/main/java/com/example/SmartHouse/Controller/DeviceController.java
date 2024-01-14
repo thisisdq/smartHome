@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class DeviceController {
     @PostMapping("/getAllDevice")
     public ResponseEntity<List<DeviceEntity>> getAllDevice(){
         return new ResponseEntity<>(deviceService.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("/updateDevice")
+    public ResponseEntity<DeviceEntity> updateDevice(@RequestBody DeviceEntity device){
+        return new ResponseEntity<>(deviceService.updateDevice(device),HttpStatus.OK);
     }
 
 //    @PostMapping("/getAllDeviceByUser")

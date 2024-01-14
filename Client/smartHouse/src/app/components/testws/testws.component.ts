@@ -9,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './testws.component.scss'
 })
 export class TestwsComponent {
-  devices = [];
+  data:any; 
 }

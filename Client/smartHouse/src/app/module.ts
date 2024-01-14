@@ -1,17 +1,19 @@
-
-export interface House {
-    houseID? : number,
-    address? : string,
-    floors? : Floor[],
-    userID? : number
-}
-
 export interface UserAccount {
     userAccountID?: number,
     fullname?: string,
     username?: string,
     password?: string,
     houses?: House[],
+}
+
+export interface House {
+    houseID? : number,
+    houseTitle? :string,
+    address? : string,
+    houseTemperature? : number,
+    houseHumidity? : number,
+    floors? : Floor[],
+    userID? : number
 }
 export interface Floor {
     floorID? : number,

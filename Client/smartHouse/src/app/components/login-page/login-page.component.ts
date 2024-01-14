@@ -17,12 +17,16 @@ export class LoginPageComponent {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private authservice: AuthenticationService,
-    private router:Router,
+    private router: Router,
   ) { }
 
-  userAccount : UserAccount = {};
+  userAccount: UserAccount = {};
 
   ngOnInit() {
+
+    if (this.authservice.session) {
+      this.router.navigateByUrl('/smarthousepage');
+    }
     const container = this.document.getElementById('login-page-container');
     const registerBtn = this.document.getElementById('register');
     const loginBtn = this.document.getElementById('login');
@@ -37,16 +41,15 @@ export class LoginPageComponent {
   }
   onSubmitLogin() {
     console.log(this.userAccount);
-    let user = this.authservice.login(this.userAccount);
-    console.log('user : ');
-    user.subscribe(user => {
-      if(!user){
-        alert('FAIL to login');
-      }
-      else {
-        this.router.navigateByUrl('/smarthousepage');
-      }
-    });
+    this.authservice.login(this.userAccount);
+    let user = this.authservice.session;
+    console.log('user : ' + user);
+    if (!user) {
+      alert('FAIL to login');
+    }
+    else {
+      this.router.navigateByUrl('/smarthousepage');
+    };
   }
   onSubmitRegister() {
     console.log(this.userAccount);

@@ -23,8 +23,8 @@ public class DeviceEntity {
     @Column(name = "DEVICE_STATUS")
     private String deviceStatus;
 
-    @Column(name = "DEVICE_TYPE")
-    private String deviceType;
+    @Column(name = "DEVICE_TYPE_ID")
+    private Integer deviceTypeID;
 
     @Column(name = "DEVICE_VALUE")
     private Integer deviceValue;
@@ -37,6 +37,9 @@ public class DeviceEntity {
 
     @Column(name = "DEVICE_PORT")
     private String devicePort;
+
+    @Transient
+    private String DeviceType;
 
 }
 

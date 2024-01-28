@@ -1,0 +1,100 @@
+<div class="user-page">
+  <div class="wrapper">
+    <div class="user-page-container">
+      <div class="container-left column">
+        <!--  nav -->
+        <div class="nav-left">
+          <div class="current-date">
+            <span class="time">{{ time | date : "hh:mm" }}</span>
+            <div class="bottom-date">
+              <div class="day-month">
+                <span class="day">{{ time | date : "EEEE dd" }}</span>
+                <span class="month">{{ time | date : "MMMM" }}</span>
+              </div>
+
+              <div class="icon-AMPM">
+                <span class="fontAwesomeIcon icon">
+                  <i class="fa-solid fa-sun"></i>
+                </span>
+                <span class="a">{{ time | date : "a" }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- calendar -->
+        <app-calendar></app-calendar>
+        <!-- weather -->
+
+        <!-- music -->
+      </div>
+      <div class="container-right column">
+        <div class="nav-right">
+          <div class="user-info">
+            <span class="username">{{ acc.fullname || "Username" }}</span>
+            <div class="avata-user">
+              <img src="" alt="" />
+            </div>
+          </div>
+          <div class="event-temperature-humidity">
+            <div class="infor-event round-box">
+              <div *ngFor="let event of events_Currentday">
+                <span class="event">{{event}}</span>
+              </div>
+            </div>
+            <div class="infor-temp-humi round-box">
+              <div class="weather">
+                <span class="temperature"> {{ null || 69}} &ordm;C</span>
+                <span class="humidity"> {{ null || 45 }} % Humidity </span>
+              </div>
+              <span class="icon"><i class="fa-solid fa-cloud-sun-rain"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="controller-container" *ngFor="let house of acc.houses">
+          <div class="houses">
+            <div class="house">
+              <div class="house-top">
+                <span class="house-title"><span class="house-icon"></span>{{house.houseTitle}}</span>
+                <input type="checkbox" name="house-checkbox">
+              </div>
+
+              <div class="floors" *ngFor="let floor of house.floors">
+                <div class="floor">
+                  <div class="floor-top">
+                    <span class="floor-title">{{floor.floorName}}</span>
+                    <input type="checkbox" class="house-checkbox">
+                  </div>
+
+                  <div class="rooms" *ngFor="let room of floor.rooms">
+                    <div class="room">
+                      <div>
+                        <label>{{room.roomName}}</label>
+                        <input type="checkbox" class="house-checkbox">
+                      </div>
+                      <div class="devices">
+                        <div *ngFor="let device of room.devices" (click)="deviceClick(device)">
+
+                          <div class="device" [ngClass]="device.isRunning !== 0 ? 'active' : 'inactive'">
+                            <div class="icon-value">
+                              <span class="icon-device" [ngClass]="device.deviceType"></span>
+                              <span class="value-device">{{device.deviceValue}}</span>
+                            </div>
+                            <div class="device-infor">
+                              <span class="device-name">{{device.deviceName}}</span>
+                              <span class="device-status">{{device.deviceStatus || (device.isRunning == 0 ? 'Đang tắt' : 'Đang bật')}}</span>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

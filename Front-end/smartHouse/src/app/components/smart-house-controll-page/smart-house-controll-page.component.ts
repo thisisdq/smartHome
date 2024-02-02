@@ -50,6 +50,7 @@ export class SmartHouseControllPageComponent {
 
   fetchUserData() {
     this.acc = JSON.parse(localStorage.getItem('session') || 'null') || {};
+    
   }
 
   logout() {

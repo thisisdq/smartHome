@@ -1,7 +1,7 @@
 package com.example.SmartHouse.Service;
 
+import com.example.SmartHouse.DTO.ESP32GetDeviceDTO;
 import com.example.SmartHouse.Entity.DeviceEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -14,4 +14,11 @@ public interface DeviceService {
     DeviceEntity findById(Integer id);
 
     DeviceEntity updateDevice(DeviceEntity device);
+
+    List<ESP32GetDeviceDTO> ESP32_GET_DEVICES(Integer userID);
+
+    void setTemperature(Integer userID, Float temperature);
+    void setHumidity(Integer userID, Float humidity);
+
+    DeviceEntity getTemperatureDevice(Integer userID);
 }

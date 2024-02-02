@@ -27,7 +27,7 @@ public class DeviceEntity {
     private Integer deviceTypeID;
 
     @Column(name = "DEVICE_VALUE")
-    private Integer deviceValue;
+    private Float deviceValue;
 
     @Column(name = "is_Running")
     private Integer isRunning;
@@ -37,6 +37,9 @@ public class DeviceEntity {
 
     @Column(name = "DEVICE_PORT")
     private String devicePort;
+
+    @Column(name = "USER_ACCOUNT_ID")
+    private Integer userAccountID;
 
     @Transient
     private String DeviceType;

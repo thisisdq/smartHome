@@ -1,5 +1,6 @@
 package com.example.SmartHouse.ServiceImpl;
 
+import com.example.SmartHouse.DTO.ESP32GetDeviceDTO;
 import com.example.SmartHouse.Entity.DeviceEntity;
 import com.example.SmartHouse.Entity.DeviceTypeEntity;
 import com.example.SmartHouse.Repository.JpaRepo.DeviceRepository;
@@ -8,6 +9,7 @@ import com.example.SmartHouse.Service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,5 +66,34 @@ public class DeviceServiceImpl implements DeviceService {
                 device.setDeviceType(deviceType.getDeviceType());
             }
         }
+    }
+
+    @Override
+    public List<ESP32GetDeviceDTO> ESP32_GET_DEVICES(Integer userID) {
+        List<DeviceEntity> devices = deviceRepository.findByUserAccountID(userID);
+        List<ESP32GetDeviceDTO> esp32GetDeviceDTOList = new ArrayList<>();
+        for (DeviceEntity d : devices){
+            ESP32GetDeviceDTO esp = new ESP32GetDeviceDTO();
+            esp.setPORT(d.getDevicePort());
+            esp.setIsRunning(d.getIsRunning());
+            esp.setValue(d.getDeviceValue());
+            esp32GetDeviceDTOList.add(esp);
+        }
+        return esp32GetDeviceDTOList;
+    }
+
+    @Override
+    public void setTemperature(Integer userID, Float temperature) {
+        deviceRepository.setTemperature(userID,temperature);
+    }
+
+    @Override
+    public void setHumidity(Integer userID, Float humidity) {
+        deviceRepository.setHumidity(userID,humidity);
+    }
+
+    @Override
+    public DeviceEntity getTemperatureDevice(Integer userID) {
+        return null;
     }
 }

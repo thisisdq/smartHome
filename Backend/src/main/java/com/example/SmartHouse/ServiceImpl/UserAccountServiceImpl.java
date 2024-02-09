@@ -42,7 +42,12 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccountEntity findUserAccountEntityByUsername(String username){
-        return userAccountRepository.findUserAccountEntityByUsername(username).orElse(null);
+        UserAccountEntity user = userAccountRepository.findUserAccountEntityByUsername(username).orElse(null);
+        System.out.println(user);
+        if(user!=null){
+            updateHouseForUserAccount(user);
+        }
+        return user;
     }
 
 //    @Override
@@ -83,6 +88,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         if(_userAccountEntity != null ){
             _userAccountEntity.setPassword(null);
         }
+        else return null;
         return updateHouseForUserAccount(_userAccountEntity);
     }
 

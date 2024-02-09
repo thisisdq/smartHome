@@ -188,6 +188,9 @@
 
 .toggle-left{
     transform: translateX(-200%);
+    p {
+        margin-right: 30px;
+    }
 }
 
 .login-page-container.active .toggle-left{
@@ -197,6 +200,9 @@
 .toggle-right{
     right: 0;
     transform: translateX(0);
+    p{
+        margin-left: 30px;
+    }
 }
 
 .login-page-container.active .toggle-right{

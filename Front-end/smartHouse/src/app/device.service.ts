@@ -6,11 +6,18 @@ import { Device } from './module';
   providedIn: 'root'
 })
 export class DeviceService {
+  STATUS_ON = 1;
+  STATUS_OFF = 0;
 
   constructor(private http : HttpClient) { }
   baseUrl = 'http://localhost:8888/';
 
-  updateDevice(device :Device) {
+  toggleIsRunning(device :Device) {
     return this.http.post(this.baseUrl +'updateDevice', device).subscribe((device : Device) => device);
+  }
+
+  updateDevicebyStatus(devicei :Device, status: number) {
+    devicei.isRunning = status;
+    return this.http.post(this.baseUrl +'updateDevice', devicei).subscribe((device : Device) => devicei = device);
   }
 }

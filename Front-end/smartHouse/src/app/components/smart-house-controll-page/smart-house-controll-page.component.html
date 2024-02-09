@@ -30,6 +30,7 @@
       <div class="container-right column">
         <div class="nav-right">
           <div class="user-info">
+            <div class="avata-user" (click)="logout()"></div>
             <span class="username">{{ acc.fullname || "Username" }}</span>
             <div class="avata-user">
               <img src="" alt="" />
@@ -43,8 +44,8 @@
             </div>
             <div class="infor-temp-humi round-box">
               <div class="weather">
-                <span class="temperature"> {{ null || 69}} &ordm;C</span>
-                <span class="humidity"> {{ null || 45 }} % Humidity </span>
+                <span class="temperature"> {{ env.temp || "-/-"}} &ordm;C</span>
+                <span class="humidity"> {{ env.humi || "-/-" }} % Humidity </span>
               </div>
               <span class="icon"><i class="fa-solid fa-cloud-sun-rain"></i></span>
             </div>
@@ -81,7 +82,7 @@
                             </div>
                             <div class="device-infor">
                               <span class="device-name">{{device.deviceName}}</span>
-                              <span class="device-status">{{device.deviceStatus || (device.isRunning == 0 ? 'Đang tắt' : 'Đang bật')}}</span>
+                              <span class="device-status">{{device.deviceStatus}}</span>
                             </div>
 
                           </div>

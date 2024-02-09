@@ -40,6 +40,17 @@ public class UserAccountController {
         return ResponseEntity.ok().body(user);
     }
 
+    @PostMapping("/userAccount/fetchDataAccount")
+    @ResponseBody
+    public ResponseEntity<UserAccountEntity> fetchUserAccount(@RequestBody @NotNull AccountDTO accountDTO){
+        System.out.println(accountDTO.getUsername());
+        UserAccountEntity user = userAccountService.findUserAccountEntityByUsername(accountDTO.getUsername());
+        if(user != null){
+            return ResponseEntity.ok().body(user);
+        }
+        return null;
+    }
+
     @PostMapping("/userAccount/register")
     public ResponseEntity<UserAccountEntity> registerNewUser(@NotNull @RequestBody UserAccountEntity userAccount){
         UserAccountEntity _user = userAccountService.findUserAccountEntityByUsername(userAccount.getUsername());

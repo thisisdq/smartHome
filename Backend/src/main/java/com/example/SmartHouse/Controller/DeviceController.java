@@ -38,15 +38,16 @@ public class DeviceController {
         return new ResponseEntity<>(deviceService.ESP32_GET_DEVICES(userID), HttpStatus.OK);
     }
 
-
     @PostMapping("/ESP8266/temperature/{userID}/{temperature}")
-    public void ESP32SetTemperature(@PathVariable("userID") Integer userID,@PathVariable("temperature") Float temperature){
+    public ResponseEntity<String> ESP32SetTemperature(@PathVariable("userID") Integer userID,@PathVariable("temperature") Float temperature){
         deviceService.setTemperature(userID,temperature);
+        return new ResponseEntity<>("temperature updated to : " + temperature,HttpStatus.OK);
     }
 
     @PostMapping("/ESP8266/humidity/{userID}/{humidity}")
-    public void ESP32SetHumidity(@PathVariable("humidity") Float humidity, @PathVariable("userID") Integer userID){
+    public ResponseEntity<String> ESP32SetHumidity(@PathVariable("humidity") Float humidity, @PathVariable("userID") Integer userID){
         deviceService.setHumidity(userID,humidity);
+        return new ResponseEntity<>( "Humidity updated to : " + humidity, HttpStatus.OK);
     }
 
     

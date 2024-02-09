@@ -14,13 +14,14 @@ import java.util.Optional;
 @Repository
 public interface UserAccountRepository extends JpaRepository<UserAccountEntity,Integer> {
 
-    Optional<UserAccountEntity> findUserAccountEntityByUsername(String username);
+//    Optional<UserAccountEntity> findUserAccountEntityByUsername(String username);
 
 
     @Query("SELECT u FROM UserAccountEntity u Where u.userAccountID = :ID")
     Optional<UserAccountEntity> findUserById(@Param("ID") Integer ID);
 
-
+    @Query("SELECT u FROM UserAccountEntity u Where u.username = :username")
+    Optional<UserAccountEntity> findUserByUsername(@Param("username") String username);
 
     @Modifying
     @Query("update UserAccountEntity u set u.password = :password where u.username = :username ")
@@ -32,4 +33,8 @@ public interface UserAccountRepository extends JpaRepository<UserAccountEntity,I
 
     @Query("Select u from UserAccountEntity u  where u.username = :username and u.password = :password")
     Optional<UserAccountEntity> findUserAccountEntityByUsernameAndPassword(@Param("username") String username,@Param("password") String password);
+
+    @Query("Select u from UserAccountEntity u  where u.username = :username")
+    Optional<UserAccountEntity> findUserAccountEntityByUsername(@Param("username") String username);
+
 }

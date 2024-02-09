@@ -13,7 +13,7 @@ export class AuthenticationService {
   constructor(private userService: UserService, private http: HttpClient, private router: Router) {
     this.session = localStorage.getItem('session');
   }
-  session: any;
+  session: any = null;
 
   baseUrl: string = 'http://localhost:8888';
 
@@ -41,5 +41,9 @@ export class AuthenticationService {
     this.session = null;
     localStorage.removeItem('session');
     this.router.navigateByUrl('/');
+  }
+
+  register(){
+    
   }
 }

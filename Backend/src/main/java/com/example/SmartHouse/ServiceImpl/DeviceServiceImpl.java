@@ -25,7 +25,7 @@ public class DeviceServiceImpl implements DeviceService {
     public List<DeviceEntity> findAll() {
         List<DeviceEntity> listDevice = deviceRepository.findAll();
         for(DeviceEntity device : listDevice){
-            setDeviceTypeforDevice(device);
+            setDeviceTypeForDevice(device);
         }
         return listDevice;
     }
@@ -39,7 +39,7 @@ public class DeviceServiceImpl implements DeviceService {
     public List<DeviceEntity> findAllByRoomId(Integer id) {
         List<DeviceEntity> deviceEntities = deviceRepository.findAllByRoomId(id);
         for (DeviceEntity device : deviceEntities){
-            setDeviceTypeforDevice(device);
+            setDeviceTypeForDevice(device);
         }
         return  deviceEntities;
     }
@@ -59,7 +59,7 @@ public class DeviceServiceImpl implements DeviceService {
         return null;
     }
 
-    public void setDeviceTypeforDevice(DeviceEntity device){
+    public void setDeviceTypeForDevice(DeviceEntity device){
         if(device.getDeviceTypeID() != null){
             DeviceTypeEntity deviceType = deviceTypeRepository.findById(device.getDeviceTypeID()).orElse(null);
             if(deviceType != null){
@@ -70,7 +70,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<ESP32GetDeviceDTO> ESP32_GET_DEVICES(Integer userID) {
-        List<DeviceEntity> devices = deviceRepository.findByUserAccountID(userID);
+        List<DeviceEntity> devices = deviceRepository.findDeviceByUserAccountIDwhenPortNotNull(userID);
         List<ESP32GetDeviceDTO> esp32GetDeviceDTOList = new ArrayList<>();
         for (DeviceEntity d : devices){
             ESP32GetDeviceDTO esp = new ESP32GetDeviceDTO();

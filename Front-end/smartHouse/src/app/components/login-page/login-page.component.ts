@@ -23,7 +23,6 @@ export class LoginPageComponent {
   userAccount: UserAccount = {};
 
   ngOnInit() {
-
     if (this.authservice.session) {
       this.router.navigateByUrl('/smarthousepage');
     }
@@ -41,15 +40,25 @@ export class LoginPageComponent {
   }
   onSubmitLogin() {
     console.log(this.userAccount);
-    this.authservice.login(this.userAccount);
-    let user = this.authservice.session;
-    console.log('user : ' + user);
-    if (!user) {
-      alert('FAIL to login');
-    }
-    else {
-      this.router.navigateByUrl('/smarthousepage');
-    };
+    this.authservice.login(this.userAccount).subscribe(
+      data => {
+        if (data != null) {
+          this.router.navigateByUrl('/smarthousepage');
+        }
+        else {
+          alert('FAIL to login');
+        };
+      }
+    );
+    // let user = this.authservice.session;
+    // console.log('acc ' + acc);
+    // console.log('user : ' + user);
+    // if (user != null) {
+    //   alert('FAIL to login');
+    // }
+    // else {
+    //   this.router.navigateByUrl('/smarthousepage');
+    // };
   }
   onSubmitRegister() {
     console.log(this.userAccount);

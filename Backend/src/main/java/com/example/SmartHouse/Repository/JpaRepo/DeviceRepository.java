@@ -20,7 +20,10 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Integer> {
 //    List<DeviceEntity> findByUserAccountID(@Param("id") Integer id);
 
     @Query("Select d from DeviceEntity d Where d.userAccountID = :id")
-    List<DeviceEntity> findByUserAccountID(@Param("id") Integer id);
+    List<DeviceEntity> findDeviceByUserAccountID(@Param("id") Integer id);
+
+    @Query("Select d from DeviceEntity d Where d.userAccountID = :id and d.devicePort is not null")
+    List<DeviceEntity> findDeviceByUserAccountIDwhenPortNotNull(@Param("id") Integer id);
 
     @Modifying
     @Transactional
@@ -32,6 +35,6 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Integer> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE DeviceEntity d SET d.deviceValue = :humidity WHERE d.deviceTypeID =5 and d.userAccountID = :id")
+    @Query("UPDATE DeviceEntity d SET d.deviceValue = :humidity WHERE d.deviceTypeID =6 and d.userAccountID = :id")
     void setHumidity(@Param("id") Integer id, @Param("humidity") Float humidity);
 }

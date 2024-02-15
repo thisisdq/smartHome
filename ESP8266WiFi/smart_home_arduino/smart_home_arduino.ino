@@ -6,7 +6,7 @@
 
 const char *ssid = "DanhQuyWiFi";  // Nha 42 5Ghz - DanhQuyWiFi
 const char *password = "Danhquy2101"; // 0942864875 - 12345678
-const String baseUrl = "http://192.168.1.111:8888/";
+const String baseUrl = "http://192.168.137.1:8888/";
 
 const int GPIO_Port[] = {D0, D1, D2, D3, D4, D5, D6, D7, D8};
 const int isPinOut[] =  {1, 1, 0, 1, 1, 1, 1, 1, 1};

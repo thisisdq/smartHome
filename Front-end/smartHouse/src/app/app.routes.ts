@@ -4,6 +4,7 @@ import { SmartHouseControllPageComponent } from './components/smart-house-contro
 import { TestComponent } from './components/test/test.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { TestwsComponent } from './components/testws/testws.component';
+import { DeviceManagerComponent } from './components/device-manager/device-manager.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -11,4 +12,5 @@ export const routes: Routes = [
     { path: 'testws', component: TestwsComponent,title: 'Test'},
     { path: 'smarthousepage', component: SmartHouseControllPageComponent, title: 'USER PAGE' },
     { path: 'test', component: TestComponent, title: 'test' },
+    { path: 'device-manager', component: DeviceManagerComponent, title: 'Device Manager' },
     { path: '**', component: PageNotFoundComponent, title: 'Pagenotfound' }];

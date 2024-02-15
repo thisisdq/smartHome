@@ -50,15 +50,6 @@ export class LoginPageComponent {
         };
       }
     );
-    // let user = this.authservice.session;
-    // console.log('acc ' + acc);
-    // console.log('user : ' + user);
-    // if (user != null) {
-    //   alert('FAIL to login');
-    // }
-    // else {
-    //   this.router.navigateByUrl('/smarthousepage');
-    // };
   }
   onSubmitRegister() {
     console.log(this.userAccount);

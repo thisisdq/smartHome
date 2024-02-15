@@ -59,7 +59,6 @@ export class SmartHouseControllPageComponent {
   ngOnDestroy() {
     if (this.timeInterval) {
       console.log('clear Time Interval');
-      
       clearInterval(this.timeInterval);
     }
     if(this.userDataInterval){

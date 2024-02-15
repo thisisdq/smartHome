@@ -49,5 +49,6 @@ export enum DEVICE_TYPE {
     TV = 'TV',
     CAMERA = 'CAMERA',
     SPEAKER = 'SPEAKER',
-    FAN = 'FAN'
+    FAN = 'FAN',
+    COFFEE = 'COFFEE'
 }

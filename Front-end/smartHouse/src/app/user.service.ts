@@ -17,7 +17,6 @@ export class UserService {
    }
 
    fetchData(username : string) : any {
-    let data :UserAccount;
     return this.http.post(this.baseUrl+"/userAccount/fetchDataAccount",{username: username})
    }
 }

@@ -11,4 +11,6 @@ public interface RoomService {
     List<RoomEntity> findAll();
 
     List<RoomEntity> findAllByFloorId(Integer id);
+
+    List<RoomEntity> findAllByFloorIdWithoutRoom(Integer id);
 }

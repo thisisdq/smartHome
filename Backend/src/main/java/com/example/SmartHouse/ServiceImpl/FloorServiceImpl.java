@@ -25,11 +25,21 @@ public class FloorServiceImpl implements FloorService {
     }
 
     @Override
+    public FloorEntity findFloorByID(Integer floorID) {
+        return floorRepository.findById(floorID).orElse(null);
+    }
+
+    @Override
     public List<FloorEntity> findAllByHouseID(Integer id) {
         List<FloorEntity> _floors = floorRepository.findAllByHouseID(id);
         for(FloorEntity f : _floors) {
             f.setRooms(roomService.findAllByFloorId(f.getFloorID()));
         }
         return _floors;
+    }
+
+    @Override
+    public List<FloorEntity> findAllByHouseIDWithoutRoom(Integer id) {
+        return floorRepository.findAllByHouseID(id);
     }
 }

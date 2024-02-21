@@ -43,7 +43,7 @@ export class AuthenticationService {
     this.router.navigateByUrl('/');
   }
 
-  register(){
-    
+  register(userAccount: UserAccount){
+    return this.http.post<UserAccount>(this.baseUrl+"/register", JSON.stringify(userAccount));
   }
 }

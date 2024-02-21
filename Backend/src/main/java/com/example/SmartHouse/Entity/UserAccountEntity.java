@@ -29,6 +29,12 @@ public class UserAccountEntity {
     @Column(name = "FULLNAME")
     private String fullname;
 
+    @Column(name = "Temperature")
+    private Float Temperature;
+
+    @Column(name = "Humidity")
+    private Float Humidity;
+
     @Transient
     private List<HouseEntity> houses;
 

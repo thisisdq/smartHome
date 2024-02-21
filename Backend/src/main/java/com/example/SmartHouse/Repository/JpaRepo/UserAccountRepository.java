@@ -16,7 +16,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccountEntity,I
 
 //    Optional<UserAccountEntity> findUserAccountEntityByUsername(String username);
 
-
     @Query("SELECT u FROM UserAccountEntity u Where u.userAccountID = :ID")
     Optional<UserAccountEntity> findUserById(@Param("ID") Integer ID);
 

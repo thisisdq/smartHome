@@ -6,16 +6,15 @@
 
 const char *ssid = "DanhQuyWiFi";  // Nha 42 5Ghz - DanhQuyWiFi
 const char *password = "Danhquy2101"; // 0942864875 - 12345678
-const String baseUrl = "http://192.168.137.1:8888/";
+String baseUrl = "http://192.168.137.1:8888/";
 
 const int GPIO_Port[] = {D0, D1, D2, D3, D4, D5, D6, D7, D8};
-const int isPinOut[] =  {1, 1, 0, 1, 1, 1, 1, 1, 1};
+const int isPinOut[] =  {1 , 1 , 0 , 1 , 1 , 1 , 1 , 1 , 1};
 const int userID = 2;
 
 #define DHTPIN D2
 #define DHTTYPE DHT11
-
-//#define infraredPin D3
+#define Device_Fire_Warning D3
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -36,6 +35,7 @@ void setup()
     Serial.println("Connecting to WiFi...");
   }
   Serial.println("Connected to WiFi");
+  
   for (int i = 0; i < sizeof(GPIO_Port) / sizeof(GPIO_Port[0]); i++) {
     if (isPinOut[i]) {pinMode(GPIO_Port[i], OUTPUT);}
       else pinMode(GPIO_Port[i], INPUT);
@@ -164,6 +164,9 @@ void loop()
       sendTemperature(temperature);
       previousTemperature = temperature;
     }
+    if(temperature > 40) {
+      digitalWrite(Device_Fire_Warning, HIGH);
+    } else (digitalWrite(Device_Fire_Warning, LOW));
   }
   if (!isnan(humidity)) {
     if (humidity != previousHumidity)

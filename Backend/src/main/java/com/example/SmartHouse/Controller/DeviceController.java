@@ -1,6 +1,7 @@
 package com.example.SmartHouse.Controller;
 
 import com.example.SmartHouse.DTO.ESP32GetDeviceDTO;
+import com.example.SmartHouse.DTO.RegisterDeviceDTO;
 import com.example.SmartHouse.Entity.DeviceEntity;
 import com.example.SmartHouse.Service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,19 @@ public class DeviceController {
         return new ResponseEntity<>( "Humidity updated to : " + humidity, HttpStatus.OK);
     }
 
-    
+
+    @PostMapping("devices/register")
+    public ResponseEntity<DeviceEntity> registerDeviceByRoomID(@RequestBody RegisterDeviceDTO registerDeviceDTO){
+        DeviceEntity de = deviceService.registerByRoomID(registerDeviceDTO.getRoomID(), registerDeviceDTO.getDevice());
+        if(de != null ){
+            return new ResponseEntity<>(de,HttpStatus.OK);
+        }
+        return null;
+    }
+
+    @PostMapping("devices/delete/{deviceID}")
+    public void deleteDeviceById(@PathVariable("deviceID") Integer deviceID){
+        deviceService.deleteDeviceByID(deviceID);
+    }
+
 }

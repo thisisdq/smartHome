@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserAccount } from './module';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +17,9 @@ export class UserService {
 
    fetchData(username : string) : any {
     return this.http.post(this.baseUrl+"/userAccount/fetchDataAccount",{username: username})
+   }
+
+   getHouses (userID : number) {
+    return this.http.post(this.baseUrl+"/userAccount/getHouses",{userID: userID})
    }
 }

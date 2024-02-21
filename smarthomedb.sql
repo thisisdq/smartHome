@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 15, 2023 lúc 10:42 AM
+-- Thời gian đã tạo: Th2 16, 2024 lúc 03:07 PM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -31,34 +31,80 @@ CREATE TABLE `devices` (
   `DEVICE_ID` int(10) NOT NULL,
   `DEVICE_NAME` varchar(50) DEFAULT NULL,
   `DEVICE_STATUS` varchar(50) DEFAULT NULL,
-  `DEVICE_TYPE` varchar(50) DEFAULT NULL,
-  `DEVICE_VALUE` int(11) DEFAULT NULL,
-  `is_Running` int(11) DEFAULT 0,
+  `DEVICE_TYPE_ID` int(30) DEFAULT NULL,
+  `DEVICE_VALUE` float DEFAULT NULL,
+  `is_Running` int(11) NOT NULL DEFAULT 0,
   `ROOM_ID` int(10) DEFAULT NULL,
-  `DEVICE_PORT` varchar(10) DEFAULT NULL
+  `DEVICE_PORT` varchar(10) DEFAULT NULL,
+  `USER_ACCOUNT_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `devices`
 --
 
-INSERT INTO `devices` (`DEVICE_ID`, `DEVICE_NAME`, `DEVICE_STATUS`, `DEVICE_TYPE`, `DEVICE_VALUE`, `is_Running`, `ROOM_ID`, `DEVICE_PORT`) VALUES
-(1, 'Máy pha cafe', 'Đang tắt', NULL, 0, 0, 1, NULL),
-(2, 'Máy đun nước', 'Đang tắt', NULL, 0, 0, 1, NULL),
-(3, 'Đèn quầy', 'Đang tắt', NULL, 0, 0, 1, NULL),
-(4, 'Đèn Phòng 101', 'Đang bật', NULL, 1, 1, 2, NULL),
-(5, 'Đèn Phòng 102', 'Đang bật', NULL, 1, 1, 3, NULL),
-(6, 'Đèn Phòng 103', 'Đang bật', NULL, 1, 1, 4, NULL),
-(7, 'Đèn ngủ', 'Đang tắt', NULL, 0, 0, 5, NULL),
-(8, 'Đèn ngủ', 'Đang tắt', NULL, 0, 0, 6, NULL),
-(9, 'TV', 'Đang tắt', NULL, 0, 0, 7, NULL),
-(10, 'Điều hoà', 'Đang tắt', NULL, 0, 0, 7, NULL),
-(11, 'Đèn ban công', 'Đang tắt', NULL, 0, 0, 8, NULL),
-(12, 'Nhiệt độ tại quầy', 'đang tắt', NULL, 0, 0, 1, NULL),
-(13, 'Độ ẩm tại quầy', 'đang tắt', NULL, 0, 0, 1, NULL),
-(14, 'Điều hoà P101', 'Đang tắt', NULL, 0, 0, 2, NULL),
-(15, 'Điều hoà P102', 'Đang tắt', NULL, 0, 0, 3, NULL),
-(16, 'Điều hoà P103', 'Đang tắt', NULL, 0, 0, 3, NULL);
+INSERT INTO `devices` (`DEVICE_ID`, `DEVICE_NAME`, `DEVICE_STATUS`, `DEVICE_TYPE_ID`, `DEVICE_VALUE`, `is_Running`, `ROOM_ID`, `DEVICE_PORT`, `USER_ACCOUNT_ID`) VALUES
+(1, 'Đèn bếp', 'D0', 11, NULL, 1, 1, 'D0', 2),
+(2, 'Máy đun nước', 'D1', 1, NULL, 1, 1, 'D1', 2),
+(3, 'Đèn báo cháy', 'D3', 1, NULL, 1, 1, NULL, 2),
+(4, 'Đèn Phòng Lớn', 'D4', 1, NULL, 0, 2, 'D4', 2),
+(5, 'Đèn Phòng Nhỏ', 'D5', 1, NULL, 0, 3, 'D5', 2),
+(6, 'Đèn Phòng Khách', 'D6', 1, NULL, 1, 4, 'D6', 2),
+(7, 'TV', 'D7', 7, NULL, 0, 4, 'D7', 2),
+(8, 'Điều hoà PNL', 'D8', 4, NULL, 0, 2, 'D8', 2),
+(9, 'TV', 'Đang tắt', 7, NULL, 0, 7, NULL, 2),
+(10, 'Điều hoà', 'Đang tắt', 4, 0, 0, 7, NULL, 2),
+(11, 'Đèn ban công', 'Đang tắt', 1, NULL, 0, 8, NULL, 2),
+(12, 'Nhiệt độ trong bếp', '', 5, 28.7, 1, 1, NULL, 2),
+(13, 'Độ ẩm trong bếp', '', 6, 71, 1, 1, NULL, 2),
+(14, 'Điều hoà P101', 'Đang tắt', 4, 18, 0, 2, NULL, 2),
+(15, 'Điều hoà P102', 'Đang tắt', 4, 20, 0, NULL, NULL, NULL),
+(16, 'Điều hoà P103', 'Đang tắt', 4, 16, 0, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `devices_type`
+--
+
+CREATE TABLE `devices_type` (
+  `DEVICE_TYPE_ID` int(10) NOT NULL,
+  `DEVICE_TYPE` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `devices_type`
+--
+
+INSERT INTO `devices_type` (`DEVICE_TYPE_ID`, `DEVICE_TYPE`) VALUES
+(1, 'LED'),
+(2, 'DYNAMIC_LED'),
+(3, 'DYNAMIC_CONTROLLER'),
+(4, 'AIR_CONDITIONAL'),
+(5, 'TEMPERATURE'),
+(6, 'HUMIDITY'),
+(7, 'TV'),
+(8, 'CAMERA'),
+(9, 'SPEAKER'),
+(10, 'FAN'),
+(11, 'COFFEE');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `devices_type_seq`
+--
+
+CREATE TABLE `devices_type_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `devices_type_seq`
+--
+
+INSERT INTO `devices_type_seq` (`next_val`) VALUES
+(1);
 
 -- --------------------------------------------------------
 
@@ -77,8 +123,8 @@ CREATE TABLE `floors` (
 --
 
 INSERT INTO `floors` (`FLOOR_ID`, `FLOOR_NAME`, `HOUSE_ID`) VALUES
-(1, 'Tầng 1 - Quán CAFE', 1),
-(2, 'Tầng 2 - Nhà ở', 1);
+(1, 'Floor 1', 1),
+(2, 'Tầng 2 - Nhà ở', NULL);
 
 -- --------------------------------------------------------
 
@@ -89,15 +135,19 @@ INSERT INTO `floors` (`FLOOR_ID`, `FLOOR_NAME`, `HOUSE_ID`) VALUES
 CREATE TABLE `houses` (
   `HOUSE_ID` int(10) NOT NULL,
   `USER_ID` int(11) DEFAULT NULL,
-  `ADDRESS` varchar(100) DEFAULT NULL
+  `ADDRESS` varchar(100) DEFAULT NULL,
+  `HOUSE_TITLE` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `HOUSE_ACTIVE` int(10) DEFAULT NULL,
+  `HOUSE_TEMPERATURE` float DEFAULT NULL,
+  `HOUSE_HUMIDITY` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `houses`
 --
 
-INSERT INTO `houses` (`HOUSE_ID`, `USER_ID`, `ADDRESS`) VALUES
-(1, 2, '1 Dai Co Viet');
+INSERT INTO `houses` (`HOUSE_ID`, `USER_ID`, `ADDRESS`, `HOUSE_TITLE`, `HOUSE_ACTIVE`, `HOUSE_TEMPERATURE`, `HOUSE_HUMIDITY`) VALUES
+(1, 2, 'ĐHBKHN - 1 Đại Cồ Việt', 'IOT-Smart Home', 1, 37, 75);
 
 -- --------------------------------------------------------
 
@@ -116,14 +166,14 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`ROOM_ID`, `ROOM_NAME`, `FlOOR_ID`) VALUES
-(1, 'Quầy pha Cafe', 1),
-(2, 'Phòng 101', 1),
-(3, 'Phòng 102', 1),
-(4, 'Phòng 103', 1),
-(5, 'Phòng ngủ 1', 2),
-(6, 'Phòng ngủ 2', 2),
-(7, 'Phòng khách', 2),
-(8, 'Ban công', 2);
+(1, 'Nhà bếp', 1),
+(2, 'Phòng ngủ lớn', 1),
+(3, 'Phòng ngủ nhỏ', 1),
+(4, 'Phòng khách', 1),
+(5, 'Phòng ngủ 1', NULL),
+(6, 'Phòng ngủ 2', NULL),
+(7, 'Phòng khách', NULL),
+(8, 'Ban công', NULL);
 
 -- --------------------------------------------------------
 
@@ -135,17 +185,18 @@ CREATE TABLE `user_account` (
   `USER_ACCOUNT_ID` int(11) NOT NULL,
   `USERNAME` varchar(50) NOT NULL,
   `PASSWORD` varchar(50) NOT NULL,
-  `FULLNAME` varchar(50) DEFAULT 'User Account'
+  `FULLNAME` varchar(50) DEFAULT 'User Account',
+  `access_token` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `user_account`
 --
 
-INSERT INTO `user_account` (`USER_ACCOUNT_ID`, `USERNAME`, `PASSWORD`, `FULLNAME`) VALUES
-(1, 'admin', 'admin', 'Admin'),
-(2, 'danhquy2502', '12345678', 'Danh Quý'),
-(4, 'createUsername', 'password', 'User Full Name');
+INSERT INTO `user_account` (`USER_ACCOUNT_ID`, `USERNAME`, `PASSWORD`, `FULLNAME`, `access_token`) VALUES
+(1, 'admin5', 'admin5', 'Admin', NULL),
+(2, 'danhquy2502', '12345678', 'Danh Quý', NULL),
+(4, 'createUsername', 'password', 'User Full Name', NULL);
 
 -- --------------------------------------------------------
 
@@ -173,7 +224,16 @@ INSERT INTO `user_account_seq` (`next_val`) VALUES
 --
 ALTER TABLE `devices`
   ADD PRIMARY KEY (`DEVICE_ID`),
-  ADD KEY `device_room_fk` (`ROOM_ID`);
+  ADD UNIQUE KEY `DEVICE_PORT` (`DEVICE_PORT`,`USER_ACCOUNT_ID`),
+  ADD KEY `device_room_fk` (`ROOM_ID`),
+  ADD KEY `device_type_fk` (`DEVICE_TYPE_ID`),
+  ADD KEY `userAccountID_fk` (`USER_ACCOUNT_ID`);
+
+--
+-- Chỉ mục cho bảng `devices_type`
+--
+ALTER TABLE `devices_type`
+  ADD PRIMARY KEY (`DEVICE_TYPE_ID`);
 
 --
 -- Chỉ mục cho bảng `floors`
@@ -193,7 +253,8 @@ ALTER TABLE `houses`
 -- Chỉ mục cho bảng `rooms`
 --
 ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`ROOM_ID`);
+  ADD PRIMARY KEY (`ROOM_ID`),
+  ADD KEY `room_floor_fk` (`FlOOR_ID`);
 
 --
 -- Chỉ mục cho bảng `user_account`
@@ -210,7 +271,13 @@ ALTER TABLE `user_account`
 -- AUTO_INCREMENT cho bảng `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `DEVICE_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `DEVICE_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT cho bảng `devices_type`
+--
+ALTER TABLE `devices_type`
+  MODIFY `DEVICE_TYPE_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `floors`
@@ -244,7 +311,9 @@ ALTER TABLE `user_account`
 -- Các ràng buộc cho bảng `devices`
 --
 ALTER TABLE `devices`
-  ADD CONSTRAINT `device_room_fk` FOREIGN KEY (`ROOM_ID`) REFERENCES `rooms` (`ROOM_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `device_room_fk` FOREIGN KEY (`ROOM_ID`) REFERENCES `rooms` (`ROOM_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `device_type_fk` FOREIGN KEY (`DEVICE_TYPE_ID`) REFERENCES `devices_type` (`DEVICE_TYPE_ID`),
+  ADD CONSTRAINT `userAccountID_fk` FOREIGN KEY (`USER_ACCOUNT_ID`) REFERENCES `user_account` (`USER_ACCOUNT_ID`);
 
 --
 -- Các ràng buộc cho bảng `floors`
@@ -257,6 +326,12 @@ ALTER TABLE `floors`
 --
 ALTER TABLE `houses`
   ADD CONSTRAINT `house_user_fk` FOREIGN KEY (`USER_ID`) REFERENCES `user_account` (`USER_ACCOUNT_ID`);
+
+--
+-- Các ràng buộc cho bảng `rooms`
+--
+ALTER TABLE `rooms`
+  ADD CONSTRAINT `room_floor_fk` FOREIGN KEY (`FlOOR_ID`) REFERENCES `floors` (`FLOOR_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

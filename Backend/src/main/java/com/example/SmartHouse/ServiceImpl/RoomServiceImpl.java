@@ -32,4 +32,9 @@ public class RoomServiceImpl implements RoomService {
         }
         return _rooms;
     }
+
+    @Override
+    public List<RoomEntity> findAllByFloorIdWithoutRoom(Integer id) {
+        return roomRepository.findAllByFloorID(id);
+    }
 }

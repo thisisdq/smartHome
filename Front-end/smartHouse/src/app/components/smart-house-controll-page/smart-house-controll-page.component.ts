@@ -43,7 +43,6 @@ export class SmartHouseControllPageComponent {
     if(this.acc.username){
       this.username = this.acc.username;
     }
-    console.log(this.username);
     this.fetchUserData();
     this.time = Date.now();
 
@@ -58,11 +57,9 @@ export class SmartHouseControllPageComponent {
 
   ngOnDestroy() {
     if (this.timeInterval) {
-      console.log('clear Time Interval');
       clearInterval(this.timeInterval);
     }
     if(this.userDataInterval){
-      console.log('clearUD Interval');
       clearInterval(this.userDataInterval);
     }
   }
@@ -72,7 +69,6 @@ export class SmartHouseControllPageComponent {
     const session = JSON.parse(localStorage.getItem('session') || 'null') || {};
     this.userService.fetchData(session.username).subscribe( (data : any) => {
       this.acc = data;
-      
     });
   }
 

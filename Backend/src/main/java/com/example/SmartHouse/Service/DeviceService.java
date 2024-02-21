@@ -21,4 +21,8 @@ public interface DeviceService {
     void setHumidity(Integer userID, Float humidity);
 
     DeviceEntity getTemperatureDevice(Integer userID);
+
+    DeviceEntity registerByRoomID(Integer roomID, DeviceEntity deviceEntity);
+
+    void deleteDeviceByID(Integer deviceID);
 }

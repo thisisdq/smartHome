@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface HouseRepository extends JpaRepository<HouseEntity, Integer> {
 
-    @Query("Select h from HouseEntity h WHERE h.userID = :id")
-    List<HouseEntity> findAllByUserId(@Param("id") Integer id);
+    @Query("Select h from HouseEntity h WHERE h.userID = :userID")
+    List<HouseEntity> findAllByUserId(@Param("userID") Integer userID);
 }

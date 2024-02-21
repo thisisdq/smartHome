@@ -94,7 +94,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private UserAccountEntity updateHouseForUserAccount(UserAccountEntity userAccount){
         if (userAccount != null ){
-            userAccount.setHouses(houseService.findAllByUserId(userAccount.getUserAccountID()));
+            userAccount.setHouses(houseService.findAllByUserIdWithFloor(userAccount.getUserAccountID()));
         }
         return userAccount;
     }

@@ -1,33 +1,4 @@
 <div class="container">
-    <table>
-        <thead>
-            <th>Houses</th>
-            <th>Floors</th>
-            <th>Rooms</th>
-            <th>Device name</th>
-            <th>Device Status</th>
-            <th>DeviceType</th>
-            <th>Device value</th>
-            <th>Running</th>
-        </thead>
-        <tbody *ngFor="let house of userAccount.houses">
-            <div *ngFor="let floor of house.floors">
-                <div *ngFor="let room of floor.rooms">
-                    <div *ngFor="let device of room.devices">
-                        <tr>
-                            <td>{{house.houseTitle}}</td>
-                            <td>{{floor.floorName}}</td>
-                            <td>{{room.roomName}}</td>
-                            <td>{{device.deviceName}}</td>
-                            <td>{{device.deviceStatus}}</td>
-                            <td>{{device.devicePort}}</td>
-                            <td>{{device.deviceValue}}</td>
-                            <td>{{device.isRunning}}</td>
-                        </tr>
-                    </div>
-                </div>
-            </div>
-        </tbody>
-
-    </table>
+    <div>Device Manager - {{userAccount.fullname}}</div>
 </div>
+

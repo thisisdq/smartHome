@@ -5,6 +5,7 @@ import com.example.SmartHouse.Entity.DeviceEntity;
 import com.example.SmartHouse.Entity.DeviceTypeEntity;
 import com.example.SmartHouse.Repository.JpaRepo.DeviceRepository;
 import com.example.SmartHouse.Repository.JpaRepo.DeviceTypeRepository;
+import com.example.SmartHouse.Repository.JpaRepo.RoomRepository;
 import com.example.SmartHouse.Service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Autowired
     private DeviceTypeRepository deviceTypeRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     @Override
     public List<DeviceEntity> findAll() {
@@ -95,5 +99,21 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public DeviceEntity getTemperatureDevice(Integer userID) {
         return null;
+    }
+
+
+    @Override
+    public DeviceEntity registerByRoomID(Integer roomID, DeviceEntity deviceEntity) {
+        if(roomRepository.findById(roomID).orElse(null) != null){
+            deviceEntity.setId(null);
+            return deviceRepository.save(deviceEntity);
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteDeviceByID(Integer deviceID) {
+
+        deviceRepository.deleteById(deviceID);
     }
 }

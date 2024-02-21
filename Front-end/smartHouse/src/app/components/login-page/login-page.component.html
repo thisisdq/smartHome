@@ -25,8 +25,9 @@
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your Account</span>
-                <input type="text" placeholder="Username" [(ngModel)]="userAccount.username" name="usernmae">
-                <input type="password" placeholder="Password" [(ngModel)]="userAccount.password" name="password" placeholder="Password">
+                <input type="text" placeholder="Username" [(ngModel)]="userAccount.username" name="usernmae" (ngModelChange)="hideNotifi()">
+                <input type="password" placeholder="Password" [(ngModel)]="userAccount.password" name="password" placeholder="Password" (ngModelChange)="hideNotifi()">
+                <span id="Login-failed-notification" class="hide" style="color: red; font-size : 1rem; font-weight : 600">Login failed, username or password incorrect ! </span>
                 <a href="#">Forget Your Password?</a>
                 <button type="submit">Sign In</button>
             </form>

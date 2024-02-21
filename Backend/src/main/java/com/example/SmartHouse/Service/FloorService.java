@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface FloorService {
     List<FloorEntity> findAll();
+
+    FloorEntity findFloorByID(Integer floorID);
     List<FloorEntity> findAllByHouseID(Integer id);
+    List<FloorEntity> findAllByHouseIDWithoutRoom(Integer id);
 }

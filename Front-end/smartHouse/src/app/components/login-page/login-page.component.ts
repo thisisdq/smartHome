@@ -29,6 +29,7 @@ export class LoginPageComponent {
     const container = this.document.getElementById('login-page-container');
     const registerBtn = this.document.getElementById('register');
     const loginBtn = this.document.getElementById('login');
+   
 
     registerBtn?.addEventListener('click', () => {
       container?.classList.add("active");
@@ -39,6 +40,7 @@ export class LoginPageComponent {
     });
   }
   onSubmitLogin() {
+    const loginFailed = this.document.getElementById('Login-failed-notification');
     console.log(this.userAccount);
     this.authservice.login(this.userAccount).subscribe(
       data => {
@@ -46,12 +48,28 @@ export class LoginPageComponent {
           this.router.navigateByUrl('/smarthousepage');
         }
         else {
-          alert('FAIL to login');
+          loginFailed?.classList.remove("hide");
         };
       }
     );
   }
   onSubmitRegister() {
     console.log(this.userAccount);
+    this.authservice.register(this.userAccount).subscribe(
+      data => {
+        if(data != null) {
+          localStorage.setItem('session', JSON.stringify(data));
+          this.router.navigateByUrl('/device-manager')
+        }
+        else {
+          alert('FAIL to register');
+        }
+      }
+    );
+  }
+
+  hideNotifi(){
+    const loginFailed = this.document.getElementById('Login-failed-notification');
+    loginFailed?.classList.add('hide');
   }
 }

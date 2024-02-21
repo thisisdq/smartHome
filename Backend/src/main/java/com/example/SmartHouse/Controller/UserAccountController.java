@@ -2,6 +2,7 @@ package com.example.SmartHouse.Controller;
 
 import com.example.SmartHouse.DTO.AccountDTO;
 import com.example.SmartHouse.DTO.ChangePasswordDTO;
+import com.example.SmartHouse.DTO.TemperatureAndHumityDTO;
 import com.example.SmartHouse.Entity.UserAccountEntity;
 import com.example.SmartHouse.Service.UserAccountService;
 import org.jetbrains.annotations.NotNull;
@@ -50,6 +51,16 @@ public class UserAccountController {
         return null;
     }
 
+    @PostMapping("/userAccount/fetchTemperatureAndHumidity")
+    @ResponseBody
+    public ResponseEntity<TemperatureAndHumityDTO> fetchTemperatureAndHumidityUserAccount(@RequestBody @NotNull AccountDTO accountDTO){
+        UserAccountEntity user = userAccountService.findUserAccountEntityByUsernameWithoutHouse(accountDTO.getUsername());
+        if(user != null){
+            return ResponseEntity.ok().body(new TemperatureAndHumityDTO(user.getTemperature(), user.getHumidity()));
+        }
+        return null;
+    }
+
     @PostMapping("/userAccount/register")
     public ResponseEntity<UserAccountEntity> registerNewUser(@NotNull @RequestBody UserAccountEntity userAccount){
         UserAccountEntity _user = userAccountService.findUserAccountEntityByUsername(userAccount.getUsername());
@@ -86,4 +97,17 @@ public class UserAccountController {
         Assert.notNull(userAccountEntity.getUsername(),"Username must be not null!");
         userAccountService.deleteUserByUsername(userAccountEntity.getUsername());
     }
+
+    @PostMapping("/ESP8266/temperature/{userID}/{temperature}")
+    public ResponseEntity<String> ESP32SetTemperature(@PathVariable("userID") Integer userID,@PathVariable("temperature") Float temperature){
+        userAccountService.setTemperature(userID,temperature);
+        return new ResponseEntity<>("temperature updated to : " + temperature,HttpStatus.OK);
+    }
+
+    @PostMapping("/ESP8266/humidity/{userID}/{humidity}")
+    public ResponseEntity<String> ESP32SetHumidity(@PathVariable("humidity") Float humidity, @PathVariable("userID") Integer userID){
+        userAccountService.setHumidity(userID,humidity);
+        return new ResponseEntity<>( "Humidity updated to : " + humidity, HttpStatus.OK);
+    }
+
 }

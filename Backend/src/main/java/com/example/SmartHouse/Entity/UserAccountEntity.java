@@ -30,10 +30,10 @@ public class UserAccountEntity {
     private String fullname;
 
     @Column(name = "Temperature")
-    private Float Temperature;
+    private Float temperature;
 
     @Column(name = "Humidity")
-    private Float Humidity;
+    private Float humidity;
 
     @Transient
     private List<HouseEntity> houses;

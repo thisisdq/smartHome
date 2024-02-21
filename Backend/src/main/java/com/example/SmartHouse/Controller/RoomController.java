@@ -1,6 +1,7 @@
 package com.example.SmartHouse.Controller;
 
 import com.example.SmartHouse.DTO.RegisterRoomDTO;
+import com.example.SmartHouse.DTO.TurnOnOffAllDTO;
 import com.example.SmartHouse.Entity.FloorEntity;
 import com.example.SmartHouse.Entity.RoomEntity;
 import com.example.SmartHouse.Repository.JpaRepo.RoomRepository;

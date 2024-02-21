@@ -4,6 +4,13 @@ export interface UserAccount {
     username?: string,
     password?: string,
     houses?: House[],
+    temperature?: number;
+    humidity?: number;
+}
+
+export interface TemperatureAndHumidity {
+    temperature?: number;
+    humidity?: number;
 }
 
 export interface House {

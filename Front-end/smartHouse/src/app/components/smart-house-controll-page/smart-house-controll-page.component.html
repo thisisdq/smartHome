@@ -31,7 +31,7 @@
         <div class="nav-right">
           <div class="user-info">
             <!-- <div class="avata-user" (click)="logout()"></div> -->
-            <div class="logout-btn"  (click)="logout()"> <i class="fa-solid fa-power-off"></i></div>
+            <div class="logout-btn" (click)="logout()"> <i class="fa-solid fa-power-off"></i></div>
             <span class="username">{{ acc.fullname || "Username" }}</span>
             <div class="avata-user">
               <img src="" alt="" />
@@ -45,8 +45,8 @@
             </div> -->
             <div class="infor-temp-humi round-box">
               <div class="weather">
-                <span class="temperature"> {{ env.temp || "--/--"}} &ordm;C</span>
-                <span class="humidity"> {{ env.humi || "--/--" }} % </span>
+                <span class="temperature"> {{ acc.temperature || "--/--"}} &ordm;C</span>
+                <span class="humidity"> {{ acc.humidity || "--/--" }} % </span>
               </div>
               <span class="icon"><i class="fa-solid fa-cloud-sun-rain"></i></span>
             </div>
@@ -86,13 +86,21 @@
                         <div *ngFor="let device of room.devices" (click)="deviceClick(device)">
                           <div class="device" [ngClass]="device.isRunning !== 0 ? 'active' : 'inactive'">
                             <div class="icon-value">
+                              <!-- <span *ngIf="device.deviceType == 'AIR_CONDITIONAL'" class="icon-device" [ngClass]="device.deviceType"></span> -->
                               <span class="icon-device" [ngClass]="device.deviceType"></span>
                               <span class="value-device">{{device.deviceValue}}</span>
+                              <div *ngIf="device.deviceType == 'AIR_CONDITIONAL'" class="air-conditional">
+                                <button class="plus air-conditional-btn"
+                                  (click)="logplus(device,$event); $event.stopPropagation()"><i class="fa-solid fa-caret-up"></i></button>
+                                <button class="sub air-conditional-btn"
+                                  (click)="logsub(device,$event);  $event.stopPropagation()"><i class="fa-solid fa-caret-down"></i></button>
+                              </div>
                             </div>
                             <div class="device-infor">
                               <span class="device-name">{{device.deviceName}}</span>
                               <span class="device-status">{{device.deviceStatus}}</span>
                             </div>
+
 
                           </div>
                         </div>

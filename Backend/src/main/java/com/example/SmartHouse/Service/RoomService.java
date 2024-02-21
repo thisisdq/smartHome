@@ -1,5 +1,6 @@
 package com.example.SmartHouse.Service;
 
+import com.example.SmartHouse.DTO.TurnOnOffAllDTO;
 import com.example.SmartHouse.Entity.RoomEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,4 +14,5 @@ public interface RoomService {
     List<RoomEntity> findAllByFloorId(Integer id);
 
     List<RoomEntity> findAllByFloorIdWithoutRoom(Integer id);
+
 }

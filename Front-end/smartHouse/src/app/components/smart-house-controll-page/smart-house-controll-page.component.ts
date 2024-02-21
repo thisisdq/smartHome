@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { AuthenticationService } from "../../authentication.service";
 import { Router } from "@angular/router";
-import { DEVICE_TYPE, Device, Floor, House, Room, UserAccount } from "../../module";
+import { DEVICE_TYPE, Device, Floor, House, Room, TemperatureAndHumidity, UserAccount } from "../../module";
 import { CommonModule } from "@angular/common";
 import { CalendarComponent } from "../calendar/calendar.component";
 import { UserService } from "../../user.service";
@@ -23,17 +23,10 @@ export class SmartHouseControllPageComponent {
   ) {}
 
   public acc: UserAccount = {};
-  public tempDevice :any;
-  public humiDevice : any;
-  public env = {temp: null, humi : null}
   private username:string = "";
-
-  fetchTempHumi(){
-    let i = this.userService.fetchTempandHumi(this.username).subscribe(data => {});
-  }
-  
   public time = Date.now();
   public timeInterval: any;
+  public TempAndHumiInterval: any;
 
   public userDataInterval:  any;
   events_Currentday = ['No more event for today','Event 1 was here']
@@ -49,6 +42,10 @@ export class SmartHouseControllPageComponent {
     this.timeInterval = setInterval(() => {
       this.time = Date.now();
     }, 1000);
+
+    this.TempAndHumiInterval = setInterval(() => {
+      this.fetchTempHumi();
+    },1000);
     this.userDataInterval = setInterval(() => {
       this.fetchUserData();
       console.log('IntervalFetch');
@@ -64,6 +61,13 @@ export class SmartHouseControllPageComponent {
     }
   }
 
+  fetchTempHumi(){
+    const session = JSON.parse(localStorage.getItem('session') || 'null') || {};
+    this.userService.fetchTempandHumi(session.username).subscribe( (data : TemperatureAndHumidity) => {
+      this.acc.temperature = data.temperature;
+      this.acc.humidity = data.humidity;
+    })
+  }
 
   fetchUserData() {
     const session = JSON.parse(localStorage.getItem('session') || 'null') || {};
@@ -79,12 +83,45 @@ export class SmartHouseControllPageComponent {
     localStorage.removeItem('session');
   }
 
-  saveSession() {
-    localStorage.setItem('session', JSON.stringify(this.acc));
-  }
+
 
   public deviceClick(device : Device) {
-    this.saveSession();
-    this.deviceService.updateDevicebyStatus(device, device.isRunning == 0 ? this.deviceService.STATUS_ON :this.deviceService.STATUS_OFF);
+    console.log('deviceClick');
+    let d : Device = {};
+    d.id = device.id;
+    d.isRunning = device.isRunning == 0 ? this.deviceService.STATUS_ON :this.deviceService.STATUS_OFF;
+    d.deviceValue = device.deviceValue;
+    this.deviceService.updateDevicebyStatus(d).subscribe( (data : Device )=> {
+      device = data;
+    });
+    this.fetchUserData();
+  }
+
+  logplus(device : Device, event : Event) {
+    event.stopPropagation();
+    let d : Device = {};
+    d.id = device.id;
+    d.isRunning = this.deviceService.STATUS_ON;
+    d.deviceValue = (device.deviceValue! + 1) > 32 ? 32 : (device.deviceValue! + 1) ;
+    console.log('+ ' + d.deviceValue );
+    this.deviceService.updateDevicebyStatus(d).subscribe( (data : Device) => {
+      device = data;
+      console.log(data.deviceValue);
+    });
+    this.fetchUserData();
+  }
+  logsub(device : Device, event : Event) {
+    event.stopPropagation();
+    let d : Device = {};
+    d.id = device.id;
+    d.isRunning = this.deviceService.STATUS_ON;
+    d.deviceValue = (device.deviceValue! - 1) < 16 ? 16 : (device.deviceValue! - 1);
+    console.log('-' + d.deviceValue);
+    this.deviceService.updateDevicebyStatus(d).subscribe( (data : Device) => {
+      device = data;
+      console.log(data.deviceValue);
+      
+    });
+    this.fetchUserData();
   }
 }

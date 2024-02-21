@@ -92,11 +92,26 @@ public class UserAccountServiceImpl implements UserAccountService {
         return updateHouseForUserAccount(_userAccountEntity);
     }
 
+    @Override
+    public UserAccountEntity findUserAccountEntityByUsernameWithoutHouse(String username) {
+        return userAccountRepository.findUserAccountEntityByUsername(username).orElse(null);
+    }
+
     private UserAccountEntity updateHouseForUserAccount(UserAccountEntity userAccount){
         if (userAccount != null ){
             userAccount.setHouses(houseService.findAllByUserIdWithFloor(userAccount.getUserAccountID()));
         }
         return userAccount;
+    }
+
+    @Override
+    public void setTemperature(Integer userID, Float value) {
+        userAccountRepository.setTemperature(userID,value);
+    }
+
+    @Override
+    public void setHumidity(Integer userID, Float value) {
+        userAccountRepository.setHumidity(userID,value);
     }
 }
 

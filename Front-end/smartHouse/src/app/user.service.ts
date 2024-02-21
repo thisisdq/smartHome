@@ -12,7 +12,7 @@ export class UserService {
    }
 
    fetchTempandHumi(username:string){
-    return this.http.post(this.baseUrl + '/',username)
+    return this.http.post(this.baseUrl + '/userAccount/fetchTemperatureAndHumidity',{ username : username})
    }
 
    fetchData(username : string) : any {

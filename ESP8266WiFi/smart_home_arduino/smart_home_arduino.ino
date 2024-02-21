@@ -3,18 +3,20 @@
 #include <ArduinoJson.h>
 #include <DHT.h>
 
-
-const char *ssid = "DanhQuyWiFi";  // Nha 42 5Ghz - DanhQuyWiFi
+const char *ssid = "LaptopDQWiFi";  // Nha 42 5Ghz - DanhQuyWiFi
 const char *password = "Danhquy2101"; // 0942864875 - 12345678
 String baseUrl = "http://192.168.137.1:8888/";
 
 const int GPIO_Port[] = {D0, D1, D2, D3, D4, D5, D6, D7, D8};
-const int isPinOut[] =  {1 , 1 , 0 , 1 , 1 , 1 , 1 , 1 , 1};
+const int isPinOut[] =  {0 , 1 , 0 , 1 , 1 , 1 , 1 , 1 , 1};
 const int userID = 2;
+const int TV_ID = 7;
+const float maxTemp = 35;
 
-#define DHTPIN D2
 #define DHTTYPE DHT11
+#define DHTPIN D2
 #define Device_Fire_Warning D3
+#define infraredPin D0
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -40,6 +42,27 @@ void setup()
     if (isPinOut[i]) {pinMode(GPIO_Port[i], OUTPUT);}
       else pinMode(GPIO_Port[i], INPUT);
   }
+}
+
+void turnOffTV()
+{
+  HTTPClient http;
+  String url = baseUrl +  "ESP32/turnOffTv/"+ (String)userID ;
+  http.begin(client, url);
+  http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  int httpResponseCode = http.POST("");
+  if (httpResponseCode > 0)
+  {
+    Serial.print("HTTP Response code TURNOFF TV: ");
+    Serial.println(httpResponseCode);
+  }
+  else
+  {
+    Serial.print("Error sending POST request TURNOFF TV: ");
+    Serial.println(httpResponseCode);
+  }
+
+  http.end();
 }
 
 void sendTemperature(float temperature)
@@ -151,7 +174,8 @@ void fetchDataLed() {
     return ;
   }
 }
-
+const int save_energy = 15000;
+int inf = save_energy ;
 void loop()
 {
   fetchDataLed();
@@ -164,9 +188,10 @@ void loop()
       sendTemperature(temperature);
       previousTemperature = temperature;
     }
-    if(temperature > 40) {
+    if(temperature >= maxTemp) {
       digitalWrite(Device_Fire_Warning, HIGH);
-    } else (digitalWrite(Device_Fire_Warning, LOW));
+    } 
+    else (digitalWrite(Device_Fire_Warning, LOW));
   }
   if (!isnan(humidity)) {
     if (humidity != previousHumidity)
@@ -175,5 +200,17 @@ void loop()
       previousHumidity = humidity;
     }
   }
-  delay(500); // Check for sensor data and LED status every 1 seconds
+  if(digitalRead(D7) == HIGH){
+    if(digitalRead(infraredPin) == 0){
+      inf = save_energy;
+    }
+    else {
+      inf -= 1000;
+      if(inf < 0){
+        inf = -1;
+        turnOffTV();
+      }
+    }
+  }
+  delay(1000); // Check for sensor data and LED status every 1 seconds
 }

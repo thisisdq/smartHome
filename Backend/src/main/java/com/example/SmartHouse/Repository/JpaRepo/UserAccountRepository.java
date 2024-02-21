@@ -19,6 +19,16 @@ public interface UserAccountRepository extends JpaRepository<UserAccountEntity,I
     @Query("SELECT u FROM UserAccountEntity u Where u.userAccountID = :ID")
     Optional<UserAccountEntity> findUserById(@Param("ID") Integer ID);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE UserAccountEntity u SET u.temperature = :value Where u.userAccountID = :ID")
+    void setTemperature(@Param("ID") Integer ID, @Param("value") Float value);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE UserAccountEntity u SET u.humidity = :value Where u.userAccountID = :ID")
+    void setHumidity(@Param("ID") Integer ID, @Param("value") Float value);
+
     @Query("SELECT u FROM UserAccountEntity u Where u.username = :username")
     Optional<UserAccountEntity> findUserByUsername(@Param("username") String username);
 

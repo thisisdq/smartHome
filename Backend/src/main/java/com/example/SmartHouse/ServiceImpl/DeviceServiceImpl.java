@@ -1,6 +1,7 @@
 package com.example.SmartHouse.ServiceImpl;
 
 import com.example.SmartHouse.DTO.ESP32GetDeviceDTO;
+import com.example.SmartHouse.DTO.TurnOnOffAllDTO;
 import com.example.SmartHouse.Entity.DeviceEntity;
 import com.example.SmartHouse.Entity.DeviceTypeEntity;
 import com.example.SmartHouse.Repository.JpaRepo.DeviceRepository;
@@ -50,16 +51,14 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public DeviceEntity updateDevice(DeviceEntity device) {
-
         DeviceEntity _device = deviceRepository.findById(device.getId()).orElse(null);
-        System.out.println(_device);
-
         if(_device != null){
             _device.setIsRunning(device.getIsRunning());
-            _device.setDeviceValue(device.getDeviceValue());
+            if(device.getDeviceValue() != null) {
+                _device.setDeviceValue(device.getDeviceValue());
+            }
             return deviceRepository.save(_device);
         }
-
         return null;
     }
 
@@ -86,15 +85,15 @@ public class DeviceServiceImpl implements DeviceService {
         return esp32GetDeviceDTOList;
     }
 
-    @Override
-    public void setTemperature(Integer userID, Float temperature) {
-        deviceRepository.setTemperature(userID,temperature);
-    }
-
-    @Override
-    public void setHumidity(Integer userID, Float humidity) {
-        deviceRepository.setHumidity(userID,humidity);
-    }
+//    @Override
+//    public void setTemperature(Integer userID, Float temperature) {
+//        deviceRepository.setTemperature(userID,temperature);
+//    }
+//
+//    @Override
+//    public void setHumidity(Integer userID, Float humidity) {
+//        deviceRepository.setHumidity(userID,humidity);
+//    }
 
     @Override
     public DeviceEntity getTemperatureDevice(Integer userID) {
@@ -115,5 +114,25 @@ public class DeviceServiceImpl implements DeviceService {
     public void deleteDeviceByID(Integer deviceID) {
 
         deviceRepository.deleteById(deviceID);
+    }
+
+    @Override
+    public void turnOffTV(Integer userID) {
+        deviceRepository.turnOffTV(userID);
+    }
+
+    @Override
+    public void TurnOnOffAllDeviceInRoom(Integer userID, Integer UHFR_ID, Integer value) {
+        deviceRepository.turnOnOffAllDeviceByRoomID(userID, UHFR_ID, value);
+    }
+
+    @Override
+    public void TurnOnOffAllDeviceInFloor(Integer userID, Integer UHFR_ID, Integer value) {
+        deviceRepository.turnOnOffAllDeviceByFloorID(userID, UHFR_ID, value);
+    }
+
+    @Override
+    public void TurnOnOffAllDeviceInHouse(Integer userID, Integer UHFR_ID, Integer value) {
+        deviceRepository.turnOnOffAllDeviceByHouseID(userID, UHFR_ID, value);
     }
 }

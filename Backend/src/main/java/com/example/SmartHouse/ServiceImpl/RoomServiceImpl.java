@@ -1,5 +1,6 @@
 package com.example.SmartHouse.ServiceImpl;
 
+import com.example.SmartHouse.DTO.TurnOnOffAllDTO;
 import com.example.SmartHouse.Entity.RoomEntity;
 import com.example.SmartHouse.Repository.JpaRepo.DeviceRepository;
 import com.example.SmartHouse.Repository.JpaRepo.RoomRepository;
@@ -37,4 +38,5 @@ public class RoomServiceImpl implements RoomService {
     public List<RoomEntity> findAllByFloorIdWithoutRoom(Integer id) {
         return roomRepository.findAllByFloorID(id);
     }
+
 }

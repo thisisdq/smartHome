@@ -2,9 +2,12 @@ package com.example.SmartHouse.Controller;
 
 import com.example.SmartHouse.DTO.ESP32GetDeviceDTO;
 import com.example.SmartHouse.DTO.RegisterDeviceDTO;
+import com.example.SmartHouse.DTO.TurnOnOffAllDTO;
 import com.example.SmartHouse.Entity.DeviceEntity;
 import com.example.SmartHouse.Service.DeviceService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,12 @@ public class DeviceController {
         return new ResponseEntity<>(deviceService.updateDevice(device),HttpStatus.OK);
     }
 
+    @PostMapping("/ESP32/turnOffTv/{userID}")
+    public ResponseEntity<String> turnOffTV(@PathVariable("userID") Integer userID){
+        deviceService.turnOffTV(userID);
+        return new ResponseEntity<>( "Turn off TV", HttpStatus.OK);
+    }
+
 //    @PostMapping("/getAllDeviceByUser")
 //    @ResponseBody ResponseEntity getDeviceByUser(){
 //        return new ResponseEntity(HttpStatus.OK)
@@ -38,19 +47,6 @@ public class DeviceController {
         System.out.println(userID);
         return new ResponseEntity<>(deviceService.ESP32_GET_DEVICES(userID), HttpStatus.OK);
     }
-
-    @PostMapping("/ESP8266/temperature/{userID}/{temperature}")
-    public ResponseEntity<String> ESP32SetTemperature(@PathVariable("userID") Integer userID,@PathVariable("temperature") Float temperature){
-        deviceService.setTemperature(userID,temperature);
-        return new ResponseEntity<>("temperature updated to : " + temperature,HttpStatus.OK);
-    }
-
-    @PostMapping("/ESP8266/humidity/{userID}/{humidity}")
-    public ResponseEntity<String> ESP32SetHumidity(@PathVariable("humidity") Float humidity, @PathVariable("userID") Integer userID){
-        deviceService.setHumidity(userID,humidity);
-        return new ResponseEntity<>( "Humidity updated to : " + humidity, HttpStatus.OK);
-    }
-
 
     @PostMapping("devices/register")
     public ResponseEntity<DeviceEntity> registerDeviceByRoomID(@RequestBody RegisterDeviceDTO registerDeviceDTO){
@@ -65,5 +61,28 @@ public class DeviceController {
     public void deleteDeviceById(@PathVariable("deviceID") Integer deviceID){
         deviceService.deleteDeviceByID(deviceID);
     }
+
+    @PostMapping("devices/setAllInRoom")
+    public ResponseEntity<String> TurnOnOffAllDeviceInRoom(@RequestBody @NotNull TurnOnOffAllDTO turnOnOffAllDTO){
+        int isRunning = turnOnOffAllDTO.getValue() == 0 ? 0 : 1;
+        deviceService.TurnOnOffAllDeviceInRoom(turnOnOffAllDTO.getUserID(),turnOnOffAllDTO.getId(),isRunning);
+        return new ResponseEntity<String>("Room updated to " + (isRunning == 0 ? "OFF" : "ON"),HttpStatus.OK);
+    }
+
+    @PostMapping("devices/setAllInFloor")
+    public ResponseEntity<String> TurnOnOffAllDeviceInFloor(@RequestBody @NotNull TurnOnOffAllDTO turnOnOffAllDTO){
+        int isRunning = turnOnOffAllDTO.getValue() == 0 ? 0 : 1;
+        deviceService.TurnOnOffAllDeviceInFloor(turnOnOffAllDTO.getUserID(),turnOnOffAllDTO.getId(),isRunning);
+        return new ResponseEntity<String>("Floor updated to " + (isRunning == 0 ? "OFF" : "ON"),HttpStatus.OK);
+    }
+
+    @PostMapping("devices/setAllInHouse")
+    public ResponseEntity<String> TurnOnOffAllDeviceInHouse(@RequestBody @NotNull TurnOnOffAllDTO turnOnOffAllDTO){
+        int isRunning = turnOnOffAllDTO.getValue() == 0 ? 0 : 1;
+        deviceService.TurnOnOffAllDeviceInHouse(turnOnOffAllDTO.getUserID(),turnOnOffAllDTO.getId(),isRunning);
+        return new ResponseEntity<String>("House updated to " + (isRunning == 0 ? "OFF" : "ON"),HttpStatus.OK);
+    }
+
+
 
 }

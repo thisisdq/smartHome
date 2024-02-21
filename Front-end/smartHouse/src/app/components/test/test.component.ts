@@ -8,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './test.component.scss'
 })
 export class TestComponent {
+  divclick(){
+    console.log('div');
+    
+  }
 
+  btnclick(event : Event){
+    event.stopPropagation();
+    console.log('btn');
+    
+  }
 }

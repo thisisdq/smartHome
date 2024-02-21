@@ -25,16 +25,54 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Integer> {
     @Query("Select d from DeviceEntity d Where d.userAccountID = :id and d.devicePort is not null")
     List<DeviceEntity> findDeviceByUserAccountIDwhenPortNotNull(@Param("id") Integer id);
 
-    @Modifying
-    @Transactional
-    @Query("UPDATE DeviceEntity d SET d.deviceValue = :temperature WHERE d.deviceTypeID =5 and d.userAccountID = :id")
-    void setTemperature(@Param("id") Integer id, @Param("temperature") Float temperature);
 
-//    @Query("Select d from Device d where d.userAccountID = :userID and d.deviceTypeID = 5")
-//    DeviceEntity getTemperatureDevice(@Param("userID") Integer userID);
 
     @Modifying
     @Transactional
-    @Query("UPDATE DeviceEntity d SET d.deviceValue = :humidity WHERE d.deviceTypeID =6 and d.userAccountID = :id")
-    void setHumidity(@Param("id") Integer id, @Param("humidity") Float humidity);
+    @Query("UPDATE DeviceEntity d SET d.isRunning = 0 WHERE d.userAccountID = :id AND d.deviceTypeID = 7")
+    void turnOffTV(@Param("id") Integer id);
+
+//    @Modifying
+//    @Transactional
+//    @Query("UPDATE DeviceEntity d SET d.deviceValue = :humidity WHERE d.deviceTypeID =6 and d.userAccountID = :id")
+//    void setHumidity(@Param("id") Integer id, @Param("humidity") Float humidity);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE DeviceEntity d SET d.isRunning = :value WHERE d.id in " +
+            "(" +
+            "SELECT d.id FROM UserAccountEntity u " +
+            "LEFT JOIN HouseEntity h ON h.userID = u.userAccountID " +
+            "LEFT JOIN FloorEntity f ON f.houseID = h.houseID " +
+            "LEFT JOIN RoomEntity r ON r.floorID = f.floorID " +
+            "LEFT JOIN DeviceEntity d ON d.roomID = r.roomID " +
+            "WHERE r.roomID = :UHFR_ID AND u.userAccountID = :userID" +
+            ")")
+    void turnOnOffAllDeviceByRoomID(@Param("userID") Integer userID, @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE DeviceEntity d SET d.isRunning = :value Where d.id in " +
+            "(" +
+            "SELECT d.id FROM UserAccountEntity u " +
+            "LEFT JOIN HouseEntity h ON h.userID = u.userAccountID " +
+            "LEFT JOIN FloorEntity f ON f.houseID = h.houseID " +
+            "LEFT JOIN RoomEntity r ON r.floorID = f.floorID " +
+            "LEFT JOIN DeviceEntity d ON d.roomID = r.roomID " +
+            "WHERE f.floorID = :UHFR_ID AND u.userAccountID = :userID" +
+            ")")
+    void turnOnOffAllDeviceByFloorID(@Param("userID") Integer userID, @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE DeviceEntity d SET d.isRunning = :value Where d.id in " +
+            "(" +
+            "SELECT d.id FROM UserAccountEntity u " +
+            "LEFT JOIN HouseEntity h ON h.userID = u.userAccountID " +
+            "LEFT JOIN FloorEntity f ON f.houseID = h.houseID " +
+            "LEFT JOIN RoomEntity r ON r.floorID = f.floorID " +
+            "LEFT JOIN DeviceEntity d ON d.roomID = r.roomID " +
+            "WHERE h.houseID = :UHFR_ID AND u.userAccountID = :userID" +
+            ")")
+    void turnOnOffAllDeviceByHouseID(@Param("userID") Integer userID, @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
 }

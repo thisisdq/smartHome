@@ -174,7 +174,7 @@
         }
 
         .controller-container {
-          margin-top: 20px;
+          margin-top: 10px;
           .houses {
             .house {
               background-color: rgba(200, 220, 220, 0.25);
@@ -239,25 +239,34 @@
                           margin: 10px;
                           border-radius: 10px;
                           flex-direction: column;
-                          width: 100%;
-                          width: 100px;
-                          height: 100px;
+                          width: 120px;
+                          height: 120px;
 
                           .icon-value {
                             display: flex;
                             min-height: 40px;
-                            height: 40px;
+                            height: 60px;
                             width: 100%;
+
+                            .air-conditional-btn{
+                              margin-left: 5px;
+                              height: 25px;
+                              width: 25px;
+                            }
+
+                            .air-conditional-btn.sub{
+                              margin-top: 2px;;
+                            }
 
                             .icon-device {
                               display: flex;
-                              width: 40px;
-                              height: 40px;
-                              font-size: 2rem;
+                              width: 50px;
+                              height: 50px;
+                              font-size:2rem;
                             }
 
                             .value-device {
-                              font-size: 2rem;
+                              font-size: 2.5rem;
                             }
 
                             .icon-device::before {
@@ -286,6 +295,14 @@
                               font-size: 1rem;
                               font-weight: 600;
                             }
+
+                            .device-name.air-condition {
+                              margin-right: 25px;
+                              font-size: 1rem;
+                              font-weight: 600;
+                            }
+
+
                           }
 
 
@@ -406,7 +423,7 @@ input:checked + .slider:before {
 }
 
 .AIR_CONDITIONAL::before {
-  content: '';
+  content: '\e525';
 }
 
 .TEMPERATURE::before {

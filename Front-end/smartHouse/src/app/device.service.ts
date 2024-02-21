@@ -12,12 +12,7 @@ export class DeviceService {
   constructor(private http : HttpClient) { }
   baseUrl = 'http://localhost:8888/';
 
-  toggleIsRunning(device :Device) {
-    return this.http.post(this.baseUrl +'updateDevice', device).subscribe((device : Device) => device);
-  }
-
-  updateDevicebyStatus(devicei :Device, status: number) {
-    devicei.isRunning = status;
-    return this.http.post(this.baseUrl +'updateDevice', devicei).subscribe((device : Device) => devicei = device);
+  updateDevicebyStatus(devicei :Device) {
+    return this.http.post(this.baseUrl +'updateDevice', devicei);
   }
 }

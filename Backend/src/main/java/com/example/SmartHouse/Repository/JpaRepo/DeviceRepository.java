@@ -46,9 +46,9 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Integer> {
             "LEFT JOIN FloorEntity f ON f.houseID = h.houseID " +
             "LEFT JOIN RoomEntity r ON r.floorID = f.floorID " +
             "LEFT JOIN DeviceEntity d ON d.roomID = r.roomID " +
-            "WHERE r.roomID = :UHFR_ID AND u.userAccountID = :userID" +
+            "WHERE r.roomID = :UHFR_ID" +
             ")")
-    void turnOnOffAllDeviceByRoomID(@Param("userID") Integer userID, @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
+    void turnOnOffAllDeviceByRoomID( @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
 
     @Modifying
     @Transactional
@@ -59,9 +59,9 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Integer> {
             "LEFT JOIN FloorEntity f ON f.houseID = h.houseID " +
             "LEFT JOIN RoomEntity r ON r.floorID = f.floorID " +
             "LEFT JOIN DeviceEntity d ON d.roomID = r.roomID " +
-            "WHERE f.floorID = :UHFR_ID AND u.userAccountID = :userID" +
+            "WHERE f.floorID = :UHFR_ID " +
             ")")
-    void turnOnOffAllDeviceByFloorID(@Param("userID") Integer userID, @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
+    void turnOnOffAllDeviceByFloorID( @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
 
     @Modifying
     @Transactional
@@ -72,7 +72,7 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Integer> {
             "LEFT JOIN FloorEntity f ON f.houseID = h.houseID " +
             "LEFT JOIN RoomEntity r ON r.floorID = f.floorID " +
             "LEFT JOIN DeviceEntity d ON d.roomID = r.roomID " +
-            "WHERE h.houseID = :UHFR_ID AND u.userAccountID = :userID" +
+            "WHERE h.houseID = :UHFR_ID " +
             ")")
-    void turnOnOffAllDeviceByHouseID(@Param("userID") Integer userID, @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
+    void turnOnOffAllDeviceByHouseID( @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
 }

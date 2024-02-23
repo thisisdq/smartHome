@@ -207,7 +207,7 @@ void loop()
     else {
       inf -= 1000;
       if(inf < 0){
-        inf = -1;
+        inf = save_energy;
         turnOffTV();
       }
     }

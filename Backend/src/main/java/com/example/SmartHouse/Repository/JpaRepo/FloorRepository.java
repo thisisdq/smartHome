@@ -13,4 +13,6 @@ public interface FloorRepository extends JpaRepository<FloorEntity, Integer> {
 
     @Query("Select f from FloorEntity f WHERE f.houseID = :id")
     List<FloorEntity> findAllByHouseID(@Param("id") Integer id);
+
+    
 }

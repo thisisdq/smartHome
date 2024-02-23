@@ -35,6 +35,9 @@ public class HouseEntity {
     @Column(name = "HOUSE_HUMIDITY")
     private Float houseHumidity;
 
+    @Column(name = "HOUSE_ACTIVE")
+    private Integer houseActive;
+
     @Transient
     List<FloorEntity> floors;
 }

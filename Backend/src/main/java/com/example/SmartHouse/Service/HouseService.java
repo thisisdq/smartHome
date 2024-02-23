@@ -16,4 +16,8 @@ public interface HouseService {
     List<HouseEntity> findAllByUserIdWithFloor(Integer userId);
 
     List<HouseEntity> findAllByUserIdWithoutFloor(Integer userId);
+
+    HouseEntity TurnOnOffAllDeviceInHouse(Integer houseID,Integer active);
+
+//    void setActivityOn(Integer houseID);
 }

@@ -16,10 +16,4 @@ public interface RoomRepository extends JpaRepository<RoomEntity, Integer> {
 
     @Query("Select r from RoomEntity r WHERE r.floorID = :id")
     List<RoomEntity> findAllByFloorID(@Param("id") Integer id);
-
-//    @Modifying
-//    @Transactional
-//    @Query("")
-//    void turnOnOffAllDevice(@Param("userID") Integer userID, @Param("UHFR_ID") Integer UHFR_ID, @Param("value") Integer value);
-
 }

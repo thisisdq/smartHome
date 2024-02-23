@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Device } from './module';
+import { Device, House } from './module';
 
 @Injectable({
   providedIn: 'root'
@@ -15,4 +15,17 @@ export class DeviceService {
   updateDevicebyStatus(devicei :Device) {
     return this.http.post(this.baseUrl +'updateDevice', devicei);
   }
+
+  setAllDeviceInHouse(id : number, value : number){
+    return this.http.post<House>(this.baseUrl+ 'devices/setAllInHouse',{id : id, value : value})
+  }
+
+  setAllDeviceInFloor(id : number, value : number){
+    return this.http.post<House>(this.baseUrl+ 'devices/setAllInFloor',{id : id, value : value})
+  }
+
+  setAllDeviceInRoom(id : number, value : number){
+    return this.http.post<House>(this.baseUrl+ 'devices/setAllInRoom',{id : id, value : value})
+  }
+
 }

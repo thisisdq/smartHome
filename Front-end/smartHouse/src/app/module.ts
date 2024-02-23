@@ -21,12 +21,14 @@ export interface House {
     houseHumidity? : number,
     floors? : Floor[],
     userID? : number
+    houseActive : number
 }
 export interface Floor {
     floorID? : number,
     floorName? : string,
     rooms? : Room[],
     houseID? : number,
+    floorActive? :number
 }
 
 export interface Room {
@@ -34,6 +36,7 @@ export interface Room {
     roomName? : string,
     devices? : Device[],
     floorID? : number,
+    roomActive? : number
 }
 
 export interface Device {

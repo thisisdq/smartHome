@@ -62,27 +62,4 @@ public class DeviceController {
         deviceService.deleteDeviceByID(deviceID);
     }
 
-    @PostMapping("devices/setAllInRoom")
-    public ResponseEntity<String> TurnOnOffAllDeviceInRoom(@RequestBody @NotNull TurnOnOffAllDTO turnOnOffAllDTO){
-        int isRunning = turnOnOffAllDTO.getValue() == 0 ? 0 : 1;
-        deviceService.TurnOnOffAllDeviceInRoom(turnOnOffAllDTO.getUserID(),turnOnOffAllDTO.getId(),isRunning);
-        return new ResponseEntity<String>("Room updated to " + (isRunning == 0 ? "OFF" : "ON"),HttpStatus.OK);
-    }
-
-    @PostMapping("devices/setAllInFloor")
-    public ResponseEntity<String> TurnOnOffAllDeviceInFloor(@RequestBody @NotNull TurnOnOffAllDTO turnOnOffAllDTO){
-        int isRunning = turnOnOffAllDTO.getValue() == 0 ? 0 : 1;
-        deviceService.TurnOnOffAllDeviceInFloor(turnOnOffAllDTO.getUserID(),turnOnOffAllDTO.getId(),isRunning);
-        return new ResponseEntity<String>("Floor updated to " + (isRunning == 0 ? "OFF" : "ON"),HttpStatus.OK);
-    }
-
-    @PostMapping("devices/setAllInHouse")
-    public ResponseEntity<String> TurnOnOffAllDeviceInHouse(@RequestBody @NotNull TurnOnOffAllDTO turnOnOffAllDTO){
-        int isRunning = turnOnOffAllDTO.getValue() == 0 ? 0 : 1;
-        deviceService.TurnOnOffAllDeviceInHouse(turnOnOffAllDTO.getUserID(),turnOnOffAllDTO.getId(),isRunning);
-        return new ResponseEntity<String>("House updated to " + (isRunning == 0 ? "OFF" : "ON"),HttpStatus.OK);
-    }
-
-
-
 }

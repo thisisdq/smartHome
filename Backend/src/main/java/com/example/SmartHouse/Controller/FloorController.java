@@ -1,11 +1,13 @@
 package com.example.SmartHouse.Controller;
 
 import com.example.SmartHouse.DTO.RegisterFloorDTO;
+import com.example.SmartHouse.DTO.TurnOnOffAllDTO;
 import com.example.SmartHouse.Entity.FloorEntity;
 import com.example.SmartHouse.Entity.HouseEntity;
 import com.example.SmartHouse.Repository.JpaRepo.FloorRepository;
 import com.example.SmartHouse.Service.FloorService;
 import com.example.SmartHouse.Service.HouseService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,4 +46,11 @@ public class FloorController {
         }
         return  null;
     }
+
+    @PostMapping("devices/setAllInFloor")
+    public ResponseEntity<FloorEntity> TurnOnOffAllDeviceInFloor(@RequestBody @NotNull TurnOnOffAllDTO turnOnOffAllDTO){
+        int active = turnOnOffAllDTO.getValue() == 0 ? 0 : 1;
+        return new ResponseEntity<>(floorService.TurnOnOffAllDeviceInFloor(turnOnOffAllDTO.getId(),active),HttpStatus.OK);
+    }
+
 }

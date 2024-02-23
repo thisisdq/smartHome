@@ -11,4 +11,8 @@ public interface FloorService {
     FloorEntity findFloorByID(Integer floorID);
     List<FloorEntity> findAllByHouseID(Integer id);
     List<FloorEntity> findAllByHouseIDWithoutRoom(Integer id);
+
+    FloorEntity TurnOnOffAllDeviceInFloor(Integer floorID, Integer active);
+
+//    void setActivityOn(Integer floorID);
 }

@@ -26,6 +26,9 @@ public class FloorEntity {
     @Column(name = "HOUSE_ID")
     private Integer houseID;
 
+    @Column(name = "FLOOR_ACTIVE")
+    private Integer floorActive;
+
     @Transient
     List<RoomEntity> rooms;
 }

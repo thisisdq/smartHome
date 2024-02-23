@@ -29,9 +29,5 @@ public interface DeviceService {
 
     void turnOffTV(Integer userID);
 
-    void TurnOnOffAllDeviceInRoom(Integer userID, Integer UHFR_ID, Integer value);
-    void TurnOnOffAllDeviceInFloor(Integer userID, Integer UHFR_ID, Integer value);
-    void TurnOnOffAllDeviceInHouse(Integer userID, Integer UHFR_ID, Integer value);
-
-
+    void TurnOnOffAllDeviceInRoom( Integer UHFR_ID, Integer value);
 }

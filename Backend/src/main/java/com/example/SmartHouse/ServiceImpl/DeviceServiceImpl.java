@@ -8,6 +8,7 @@ import com.example.SmartHouse.Repository.JpaRepo.DeviceRepository;
 import com.example.SmartHouse.Repository.JpaRepo.DeviceTypeRepository;
 import com.example.SmartHouse.Repository.JpaRepo.RoomRepository;
 import com.example.SmartHouse.Service.DeviceService;
+import com.example.SmartHouse.Service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +58,9 @@ public class DeviceServiceImpl implements DeviceService {
             if(device.getDeviceValue() != null) {
                 _device.setDeviceValue(device.getDeviceValue());
             }
+//            if(_device.getIsRunning() != 0){
+//                deviceRepository.setActivityOnRFH(device.getId());
+//            }
             return deviceRepository.save(_device);
         }
         return null;
@@ -122,17 +126,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public void TurnOnOffAllDeviceInRoom(Integer userID, Integer UHFR_ID, Integer value) {
-        deviceRepository.turnOnOffAllDeviceByRoomID(userID, UHFR_ID, value);
-    }
-
-    @Override
-    public void TurnOnOffAllDeviceInFloor(Integer userID, Integer UHFR_ID, Integer value) {
-        deviceRepository.turnOnOffAllDeviceByFloorID(userID, UHFR_ID, value);
-    }
-
-    @Override
-    public void TurnOnOffAllDeviceInHouse(Integer userID, Integer UHFR_ID, Integer value) {
-        deviceRepository.turnOnOffAllDeviceByHouseID(userID, UHFR_ID, value);
+    public void TurnOnOffAllDeviceInRoom( Integer UHFR_ID, Integer value) {
+        deviceRepository.turnOnOffAllDeviceByRoomID(UHFR_ID, value);
     }
 }

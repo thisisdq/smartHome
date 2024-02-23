@@ -33,8 +33,7 @@ public class HouseServiceImpl implements HouseService {
     public List<HouseEntity> findAllByUserIdWithFloor(Integer userId) {
         List<HouseEntity> _house = houseRepository.findAllByUserId(userId);
         for(HouseEntity h : _house){
-            List<FloorEntity> floors = floorService.findAllByHouseID(h.getHouseID());
-            h.setFloors(floors);
+            updateFloorForHouse(h);
         }
         return _house;
     }
@@ -60,5 +59,34 @@ public class HouseServiceImpl implements HouseService {
     @Override
     public HouseEntity findByHouseID(Integer houseID) {
         return houseRepository.findById(houseID).orElse(null);
+    }
+
+    @Override
+    public HouseEntity TurnOnOffAllDeviceInHouse(Integer houseID, Integer active) {
+        HouseEntity _house = houseRepository.findById(houseID).orElse(null);
+        if(_house != null){
+            _house.setHouseActive(active);
+            houseRepository.save(_house);
+            updateFloorForHouse(_house);
+            for(FloorEntity f : _house.getFloors()){
+                floorService.TurnOnOffAllDeviceInFloor(f.getFloorID(),active);
+            }
+            return _house;
+        }
+        return null;
+    }
+
+//    @Override
+//    public void setActivityOn(Integer houseID) {
+//        HouseEntity _house = houseRepository.findById(houseID).orElse(null);
+//        if(_house != null){
+//            _house.setHouseActive(1);
+//            houseRepository.save(_house);
+//        }
+//    }
+
+    void updateFloorForHouse(HouseEntity h){
+        List<FloorEntity> floors = floorService.findAllByHouseID(h.getHouseID());
+        h.setFloors(floors);
     }
 }

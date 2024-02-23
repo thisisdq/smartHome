@@ -33,9 +33,9 @@
             <!-- <div class="avata-user" (click)="logout()"></div> -->
             <div class="logout-btn" (click)="logout()"> <i class="fa-solid fa-power-off"></i></div>
             <span class="username">{{ acc.fullname || "Username" }}</span>
-            <div class="avata-user">
+            <!-- <div class="avata-user">
               <img src="" alt="" />
-            </div>
+            </div> -->
           </div>
           <div class="event-temperature-humidity">
             <!-- <div class="infor-event round-box">
@@ -52,13 +52,13 @@
             </div>
           </div>
         </div>
-        <div class="controller-container" *ngFor="let house of acc.houses">
-          <div class="houses">
+        <div class="controller-container" >
+          <div class="houses" *ngFor="let house of acc.houses" >
             <div class="house">
               <div class="house-top">
                 <span class="house-title"><span class="house-icon"></span>{{house.houseTitle}}</span>
                 <label class="house-checkbox switch">
-                  <input type="checkbox" checked>
+                  <input type="checkbox" [(ngModel)]="house.houseActive" (change)="houseChange(house)" >
                   <span class="slider round house-slider"></span>
                 </label>
               </div>
@@ -68,7 +68,7 @@
                   <div class="floor-top">
                     <span class="floor-title">{{floor.floorName}}</span>
                     <label class="floor-checkbox switch">
-                      <input type="checkbox" checked>
+                      <input type="checkbox" [(ngModel)]="floor.floorActive" (change)="floorChange(floor)" >
                       <span class="slider round floor-slider"></span>
                     </label>
                   </div>
@@ -78,7 +78,7 @@
                       <div class="room-top">
                         <label>{{room.roomName}}</label>
                         <label class="room-checkbox switch">
-                          <input type="checkbox">
+                          <input type="checkbox" [(ngModel)]="room.roomActive" (change)="roomChange(room)">
                           <span class="slider round room-slider"></span>
                         </label>
                       </div>

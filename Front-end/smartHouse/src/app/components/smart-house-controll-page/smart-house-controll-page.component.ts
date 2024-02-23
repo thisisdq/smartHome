@@ -6,11 +6,12 @@ import { CommonModule } from "@angular/common";
 import { CalendarComponent } from "../calendar/calendar.component";
 import { UserService } from "../../user.service";
 import { DeviceService } from "../../device.service";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-smart-house-controll-page",
   standalone: true,
-  imports: [CommonModule,CalendarComponent],
+  imports: [CommonModule,CalendarComponent, FormsModule],
   templateUrl: "./smart-house-controll-page.component.html",
   styleUrl: "./smart-house-controll-page.component.scss",
 })
@@ -59,6 +60,7 @@ export class SmartHouseControllPageComponent {
     if(this.userDataInterval){
       clearInterval(this.userDataInterval);
     }
+    localStorage.setItem('session', JSON.stringify(this.acc))
   }
 
   fetchTempHumi(){
@@ -123,5 +125,33 @@ export class SmartHouseControllPageComponent {
       
     });
     this.fetchUserData();
+  }
+
+
+  houseChange(house : House){
+    console.log(house.houseActive ? 'on' : 'off');
+    const n = house.houseActive ? 1 : 0;
+    this.deviceService.setAllDeviceInHouse(house.houseID!, n).subscribe( data => {
+      console.log(data);
+      this.fetchUserData();
+    })
+  }
+
+  floorChange(floor : Floor){
+    console.log(floor.floorActive ? 'on' : 'off');
+    const n = floor.floorActive ? 1 : 0;
+    this.deviceService.setAllDeviceInFloor(floor.floorID!, n).subscribe( data => {
+      console.log(data);
+      this.fetchUserData();
+    })
+  }
+
+  roomChange(room : Room){
+    console.log(room.roomActive ? 'on' : 'off');
+    const n = room.roomActive ? 1 : 0;
+    this.deviceService.setAllDeviceInRoom(room.roomID!, n).subscribe( data => {
+      console.log(data);
+      this.fetchUserData();
+    })
   }
 }

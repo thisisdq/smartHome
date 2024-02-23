@@ -7,6 +7,7 @@ import com.example.SmartHouse.Entity.RoomEntity;
 import com.example.SmartHouse.Repository.JpaRepo.RoomRepository;
 import com.example.SmartHouse.Service.FloorService;
 import com.example.SmartHouse.Service.RoomService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,18 @@ public class RoomController {
             return new ResponseEntity<>(roomRepository.save(re), HttpStatus.OK) ;
         }
         return null;
+    }
+
+    @PostMapping("devices/setAllInRoom")
+    public ResponseEntity<RoomEntity> TurnOnOffAllDeviceInRoom(@RequestBody @NotNull TurnOnOffAllDTO turnOnOffAllDTO){
+        int isRunning = turnOnOffAllDTO.getValue() == 0 ? 0 : 1;
+        RoomEntity _room = roomService.TurnOnOffAllDeviceInRoom(turnOnOffAllDTO.getId(),isRunning);
+        if(_room != null) {
+            return new ResponseEntity<>(_room,HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>((RoomEntity) null,HttpStatus.NOT_FOUND);
+        }
     }
 
 }

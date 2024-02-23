@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th2 16, 2024 lúc 03:07 PM
+-- Thời gian đã tạo: Th2 23, 2024 lúc 07:56 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -44,22 +44,12 @@ CREATE TABLE `devices` (
 --
 
 INSERT INTO `devices` (`DEVICE_ID`, `DEVICE_NAME`, `DEVICE_STATUS`, `DEVICE_TYPE_ID`, `DEVICE_VALUE`, `is_Running`, `ROOM_ID`, `DEVICE_PORT`, `USER_ACCOUNT_ID`) VALUES
-(1, 'Đèn bếp', 'D0', 11, NULL, 1, 1, 'D0', 2),
-(2, 'Máy đun nước', 'D1', 1, NULL, 1, 1, 'D1', 2),
-(3, 'Đèn báo cháy', 'D3', 1, NULL, 1, 1, NULL, 2),
-(4, 'Đèn Phòng Lớn', 'D4', 1, NULL, 0, 2, 'D4', 2),
-(5, 'Đèn Phòng Nhỏ', 'D5', 1, NULL, 0, 3, 'D5', 2),
+(2, 'Điều hoà', 'D1', 4, 22, 1, 3, 'D1', 2),
+(4, 'Đèn Phòng Lớn', 'D4', 1, NULL, 1, 2, 'D4', 2),
+(5, 'Đèn Phòng Nhỏ', 'D5', 1, NULL, 1, 3, 'D5', 2),
 (6, 'Đèn Phòng Khách', 'D6', 1, NULL, 1, 4, 'D6', 2),
 (7, 'TV', 'D7', 7, NULL, 0, 4, 'D7', 2),
-(8, 'Điều hoà PNL', 'D8', 4, NULL, 0, 2, 'D8', 2),
-(9, 'TV', 'Đang tắt', 7, NULL, 0, 7, NULL, 2),
-(10, 'Điều hoà', 'Đang tắt', 4, 0, 0, 7, NULL, 2),
-(11, 'Đèn ban công', 'Đang tắt', 1, NULL, 0, 8, NULL, 2),
-(12, 'Nhiệt độ trong bếp', '', 5, 28.7, 1, 1, NULL, 2),
-(13, 'Độ ẩm trong bếp', '', 6, 71, 1, 1, NULL, 2),
-(14, 'Điều hoà P101', 'Đang tắt', 4, 18, 0, 2, NULL, 2),
-(15, 'Điều hoà P102', 'Đang tắt', 4, 20, 0, NULL, NULL, NULL),
-(16, 'Điều hoà P103', 'Đang tắt', 4, 16, 0, NULL, NULL, NULL);
+(8, 'Điều hoà PNL', 'D8', 4, 25, 1, 2, 'D8', 2);
 
 -- --------------------------------------------------------
 
@@ -115,16 +105,17 @@ INSERT INTO `devices_type_seq` (`next_val`) VALUES
 CREATE TABLE `floors` (
   `FLOOR_ID` int(10) NOT NULL,
   `FLOOR_NAME` varchar(50) DEFAULT NULL,
-  `HOUSE_ID` int(10) DEFAULT NULL
+  `HOUSE_ID` int(10) DEFAULT NULL,
+  `FLOOR_ACTIVE` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `floors`
 --
 
-INSERT INTO `floors` (`FLOOR_ID`, `FLOOR_NAME`, `HOUSE_ID`) VALUES
-(1, 'Floor 1', 1),
-(2, 'Tầng 2 - Nhà ở', NULL);
+INSERT INTO `floors` (`FLOOR_ID`, `FLOOR_NAME`, `HOUSE_ID`, `FLOOR_ACTIVE`) VALUES
+(1, 'Tầng 1', 1, 1),
+(2, 'Tầng 2 - Nhà ở', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -138,16 +129,16 @@ CREATE TABLE `houses` (
   `ADDRESS` varchar(100) DEFAULT NULL,
   `HOUSE_TITLE` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `HOUSE_ACTIVE` int(10) DEFAULT NULL,
-  `HOUSE_TEMPERATURE` float DEFAULT NULL,
-  `HOUSE_HUMIDITY` float DEFAULT NULL
+  `house_humidity` float DEFAULT NULL,
+  `house_temperature` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `houses`
 --
 
-INSERT INTO `houses` (`HOUSE_ID`, `USER_ID`, `ADDRESS`, `HOUSE_TITLE`, `HOUSE_ACTIVE`, `HOUSE_TEMPERATURE`, `HOUSE_HUMIDITY`) VALUES
-(1, 2, 'ĐHBKHN - 1 Đại Cồ Việt', 'IOT-Smart Home', 1, 37, 75);
+INSERT INTO `houses` (`HOUSE_ID`, `USER_ID`, `ADDRESS`, `HOUSE_TITLE`, `HOUSE_ACTIVE`, `house_humidity`, `house_temperature`) VALUES
+(1, 2, 'ĐHBKHN - 1 Đại Cồ Việt', 'IOT-Smart Home', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -158,22 +149,22 @@ INSERT INTO `houses` (`HOUSE_ID`, `USER_ID`, `ADDRESS`, `HOUSE_TITLE`, `HOUSE_AC
 CREATE TABLE `rooms` (
   `ROOM_ID` int(10) NOT NULL,
   `ROOM_NAME` varchar(50) DEFAULT NULL,
-  `FlOOR_ID` int(10) DEFAULT NULL
+  `FlOOR_ID` int(10) DEFAULT NULL,
+  `ROOM_ACTIVE` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `rooms`
 --
 
-INSERT INTO `rooms` (`ROOM_ID`, `ROOM_NAME`, `FlOOR_ID`) VALUES
-(1, 'Nhà bếp', 1),
-(2, 'Phòng ngủ lớn', 1),
-(3, 'Phòng ngủ nhỏ', 1),
-(4, 'Phòng khách', 1),
-(5, 'Phòng ngủ 1', NULL),
-(6, 'Phòng ngủ 2', NULL),
-(7, 'Phòng khách', NULL),
-(8, 'Ban công', NULL);
+INSERT INTO `rooms` (`ROOM_ID`, `ROOM_NAME`, `FlOOR_ID`, `ROOM_ACTIVE`) VALUES
+(2, 'Phòng ngủ lớn', 1, 1),
+(3, 'Phòng ngủ nhỏ', 1, 1),
+(4, 'Phòng khách', 1, 1),
+(5, 'Phòng ngủ 1', NULL, NULL),
+(6, 'Phòng ngủ 2', NULL, NULL),
+(7, 'Phòng khách', NULL, NULL),
+(8, 'Ban công', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -186,17 +177,18 @@ CREATE TABLE `user_account` (
   `USERNAME` varchar(50) NOT NULL,
   `PASSWORD` varchar(50) NOT NULL,
   `FULLNAME` varchar(50) DEFAULT 'User Account',
-  `access_token` varchar(20) DEFAULT NULL
+  `Temperature` float DEFAULT NULL,
+  `Humidity` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `user_account`
 --
 
-INSERT INTO `user_account` (`USER_ACCOUNT_ID`, `USERNAME`, `PASSWORD`, `FULLNAME`, `access_token`) VALUES
-(1, 'admin5', 'admin5', 'Admin', NULL),
-(2, 'danhquy2502', '12345678', 'Danh Quý', NULL),
-(4, 'createUsername', 'password', 'User Full Name', NULL);
+INSERT INTO `user_account` (`USER_ACCOUNT_ID`, `USERNAME`, `PASSWORD`, `FULLNAME`, `Temperature`, `Humidity`) VALUES
+(1, 'admin5', 'admin5', 'Admin', NULL, NULL),
+(2, 'danhquy2502', '12345678', 'Danh Quý', 25.3, 90),
+(4, 'createUsername', 'password', 'User Full Name', NULL, NULL);
 
 -- --------------------------------------------------------
 
